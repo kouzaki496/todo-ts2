@@ -1,13 +1,18 @@
 // src/theme/index.ts
 import { createTheme } from '@mui/material/styles';
+import colors from './colors';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: '#1976d2',
+      main: colors.primary[500],
+      light: colors.primary[200],
+      dark: colors.primary[700],
     },
     secondary: {
-      main: '#dc004e',
+      main: colors.secondary[500],
+      light: colors.secondary[200],
+      dark: colors.secondary[700],
     },
   },
   typography: {
