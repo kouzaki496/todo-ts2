@@ -7,14 +7,14 @@ import spacing from './spacing';
 const theme = createTheme({
   palette: {
     primary: {
-      main: colors.primary[500],
-      light: colors.primary[200],
-      dark: colors.primary[700],
+      main: colors.primary.main,
+      light: colors.primary.light,
+      dark: colors.primary.dark,
     },
     secondary: {
-      main: colors.secondary[500],
-      light: colors.secondary[200],
-      dark: colors.secondary[700],
+      main: colors.secondary.main,
+      light: colors.secondary.light,
+      dark: colors.secondary.dark,
     },
     error: {
       main: colors.error.main,

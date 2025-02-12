@@ -6,6 +6,7 @@ import Button from './Button';
 const meta: Meta<typeof Button> = {
   title: 'Components/Button',
   component: Button,
+  tags: ['autodocs'],
   argTypes: {
     label: { control: 'text' },
     color: { control: 'select', options: ['default', 'primary', 'secondary'] },
