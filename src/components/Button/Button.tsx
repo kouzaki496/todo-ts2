@@ -1,14 +1,29 @@
 import React from 'react';
 import { Button as MuiButton, ButtonProps as MuiButtonProps } from '@mui/material';
+import { SvgIconProps } from '@mui/material/SvgIcon';
 
 export interface ButtonProps extends MuiButtonProps {
-  label: string;
+  label?: string;
+  icon?: React.ReactElement<SvgIconProps>;
 }
 
-const Button = ({ label, ...props }: ButtonProps) => {
+const Button = ({ label, icon, ...props }: ButtonProps) => {
   return (
-    <MuiButton {...props}>
-      {label}
+    <MuiButton
+      {...props}
+      sx={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 0.5,
+        paddingLeft: 1,
+        paddingRight: 1,
+        borderRadius: 2,
+        ...props.sx,
+      }}
+    >
+      {icon}
+      {label && <span>{label}</span>}
     </MuiButton>
   );
 };

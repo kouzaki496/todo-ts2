@@ -75,7 +75,7 @@ const typography = {
   button: {
     textTransform: 'uppercase' as 'uppercase',
     fontWeight: 500,
-    fontSize: '0.875rem',
+    fontSize: '0.9rem',
     lineHeight: 1.75,
     '@media (max-width: 600px)': {
       fontSize: '0.75rem',
