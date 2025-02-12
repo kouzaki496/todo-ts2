@@ -73,7 +73,7 @@ const typography = {
     lineHeight: 1.57,
   },
   button: {
-    textTransform: 'uppercase' as 'uppercase',
+    textTransform: 'uppercase' as const,
     fontWeight: 500,
     fontSize: '0.9rem',
     lineHeight: 1.75,

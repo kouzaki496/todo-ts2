@@ -1,6 +1,6 @@
 // src/components/Button/Button.stories.tsx
 import React from 'react';
-import { StoryFn, Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react';
 import Button from './Button';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -20,9 +20,8 @@ const meta: Meta<typeof Button> = {
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
 
-export const Primary: Story = {
+export const Primary: StoryObj<typeof meta> = {
   args: {
     label: 'Primary Button',
     color: 'primary',
@@ -31,7 +30,7 @@ export const Primary: Story = {
   },
 };
 
-export const Secondary: Story = {
+export const Secondary: StoryObj<typeof meta> = {
   args: {
     label: 'Secondary Button',
     color: 'secondary',
