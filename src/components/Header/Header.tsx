@@ -4,7 +4,7 @@ import { AppBar, Toolbar, Typography, CssBaseline, useMediaQuery, useTheme, Avat
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '../Button/Button';
 import { signInWithGoogle } from '../../service/authService';
-import { onAuthStateChanged, User } from 'firebase/auth';
+import { onAuthStateChanged, User, signOut } from 'firebase/auth';
 import { auth } from '../../config/firebaseConfig';
 
 // HeaderPropsの定義
@@ -34,6 +34,15 @@ const Header = ({ title, subtitle }: HeaderProps) => {
     }
   };
 
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      console.log('User signed out');
+    } catch (error) {
+      console.error('Sign-out failed:', error);
+    }
+  };
+
   return (
     <>
       <CssBaseline />
@@ -55,7 +64,7 @@ const Header = ({ title, subtitle }: HeaderProps) => {
           <Button color="primary" sx={{ color: theme.palette.common.white }}>About</Button>
           <Button color="primary" sx={{ color: theme.palette.common.white }}>Contact</Button>
           {user ? (
-            <IconButton sx={{ p: 0 }}>
+            <IconButton sx={{ p: 0 }} onClick={handleSignOut}>
               <Avatar alt={user.displayName || 'User'} src={user.photoURL || ''} />
             </IconButton>
           ) : (
