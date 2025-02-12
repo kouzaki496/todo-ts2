@@ -1,6 +1,7 @@
 // src/theme/index.ts
 import { createTheme } from '@mui/material/styles';
 import colors from './colors';
+import typography from './typography';
 
 const theme = createTheme({
   palette: {
@@ -35,9 +36,7 @@ const theme = createTheme({
       dark: colors.success.dark,
     },
   },
-  typography: {
-    fontFamily: 'Roboto, sans-serif',
-  },
+  typography: typography,
 });
 
 export default theme;
