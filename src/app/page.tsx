@@ -2,7 +2,8 @@
 "use client";
 
 import * as React from 'react';
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
+import Button from '@/components/Button/Button'
 
 export default function Home() {
   return (

@@ -5,9 +5,10 @@ import { SvgIconProps } from '@mui/material/SvgIcon';
 export interface ButtonProps extends MuiButtonProps {
   label?: string;
   icon?: React.ReactElement<SvgIconProps>;
+  children?: React.ReactNode;
 }
 
-const Button = ({ label, icon, ...props }: ButtonProps) => {
+const Button = ({ label, icon, children, ...props }: ButtonProps) => {
   return (
     <MuiButton
       {...props}
@@ -24,6 +25,7 @@ const Button = ({ label, icon, ...props }: ButtonProps) => {
     >
       {icon}
       {label && <span>{label}</span>}
+      {children}
     </MuiButton>
   );
 };

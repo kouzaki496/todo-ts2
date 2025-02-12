@@ -1,6 +1,5 @@
-import { light } from "@mui/material/styles/createPalette";
-
 // src/theme/colors.ts
+
 const colors = {
   primary: {
     main: '#8e24aa',
@@ -30,6 +29,14 @@ const colors = {
   success: {
     main: '#66bb6a',
     light: '#81c784',
+    dark: '#388e3c',
+  },
+  white: {
+    main: '#ffffff',
+  },
+  gray: {
+    main: '#bdbdbd',
+    light: '#eeeeee',
     dark: '#388e3c',
   },
 };
