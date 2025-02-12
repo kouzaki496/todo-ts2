@@ -2,6 +2,7 @@
 import { createTheme } from '@mui/material/styles';
 import colors from './colors';
 import typography from './typography';
+import spacing from './spacing';
 
 const theme = createTheme({
   palette: {
@@ -37,6 +38,16 @@ const theme = createTheme({
     },
   },
   typography: typography,
+  spacing: spacing,
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
+  },
 });
 
 export default theme;

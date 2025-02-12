@@ -1,3 +1,4 @@
+// src/theme/typography.ts
 const typography = {
   fontFamily: 'Noto Sans, sans-serif',
   fontSize: 14,
