@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Menu, MenuItem, Button } from '@mui/material';
 import { PopoverOrigin } from '@mui/material';
 
-interface MenuListProps {
+interface UserMenuProps {
     position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
 }
 
-function MenuList({ position }: MenuListProps) {
+function MenuList({ position }: UserMenuProps) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -18,10 +18,10 @@ function MenuList({ position }: MenuListProps) {
     };
 
     const anchorOrigin: PopoverOrigin = {
-        'top-left': { vertical: 'top', horizontal: 'left' },
-        'top-right': { vertical: 'top', horizontal: 'right' },
-        'bottom-left': { vertical: 'bottom', horizontal: 'left' },
-        'bottom-right': { vertical: 'bottom', horizontal: 'right' },
+        'top-left': { vertical: 'bottom', horizontal: 'left' },
+        'top-right': { vertical: 'bottom', horizontal: 'right' },
+        'bottom-left': { vertical: 'top', horizontal: 'left' },
+        'bottom-right': { vertical: 'top', horizontal: 'right' },
     }[position] as PopoverOrigin;
 
     const transformOrigin: PopoverOrigin = {
