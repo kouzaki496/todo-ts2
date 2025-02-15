@@ -4,9 +4,10 @@ import { PopoverOrigin } from '@mui/material';
 
 interface UserMenuProps {
     position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
+    menuItems: string[];
 }
 
-function MenuList({ position }: UserMenuProps) {
+function MenuList({ position, menuItems }: UserMenuProps) {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -44,8 +45,11 @@ function MenuList({ position }: UserMenuProps) {
                 anchorOrigin={anchorOrigin}
                 transformOrigin={transformOrigin}
             >
-                <MenuItem onClick={handleClose}>設定</MenuItem>
-                <MenuItem onClick={handleClose}>ログアウト</MenuItem>
+                {menuItems.map((item, index) => (
+                    <MenuItem key={index} onClick={handleClose}>
+                        {item}
+                    </MenuItem>
+                ))}
             </Menu>
         </div>
     );
