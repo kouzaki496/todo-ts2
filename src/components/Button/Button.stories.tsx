@@ -37,4 +37,3 @@ export const Secondary: StoryObj<typeof meta> = {
     variant: 'contained',
   },
 };
-
