@@ -3,10 +3,11 @@ import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, Typography, CssBaseline, useMediaQuery, useTheme, Avatar, IconButton } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Button from '../Button/Button';
+import MenuList from '../MenuList/MenuList';
 import { signInWithGoogle } from '../../service/authService';
 import { onAuthStateChanged, User, signOut } from 'firebase/auth';
 import { auth } from '../../config/firebaseConfig';
-
+import { Settings, Logout } from '@mui/icons-material';
 // HeaderPropsの定義
 export interface HeaderProps {
   title: string;
@@ -18,6 +19,8 @@ const Header = ({ title, subtitle }: HeaderProps) => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [user, setUser] = useState<User | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -43,6 +46,16 @@ const Header = ({ title, subtitle }: HeaderProps) => {
     }
   };
 
+  const handleAvatarClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+    setMenuOpen((prev) => !prev);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+    setMenuOpen(false);
+  };
+
   return (
     <>
       <CssBaseline />
@@ -64,9 +77,21 @@ const Header = ({ title, subtitle }: HeaderProps) => {
           <Button color="primary" sx={{ color: theme.palette.common.white }}>About</Button>
           <Button color="primary" sx={{ color: theme.palette.common.white }}>Contact</Button>
           {user ? (
-            <IconButton sx={{ p: 0 }} onClick={handleSignOut}>
-              <Avatar alt={user.displayName || 'User'} src={user.photoURL || ''} />
-            </IconButton>
+            <>
+              <IconButton sx={{ p: 0 }} onClick={handleAvatarClick}>
+                <Avatar alt={user.displayName || 'User'} src={user.photoURL || ''} />
+              </IconButton>
+              <MenuList
+                position="bottom-right"
+                menuItems={[
+                  { label: '設定', icon: <Settings /> },
+                  { label: 'ログアウト', icon: <Logout />, onClick: handleSignOut },
+                ]}
+                anchorEl={anchorEl}
+                open={menuOpen}
+                onClose={handleMenuClose}
+              />
+            </>
           ) : (
             <Button color="primary" sx={{ color: theme.palette.common.white }} onClick={handleSignIn}>
               Sign In

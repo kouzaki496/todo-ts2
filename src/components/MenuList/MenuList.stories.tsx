@@ -1,9 +1,10 @@
 // メニューを開くボタンをクリックしたらメニューが表示される
 // メニューを開いた状態でボタンをクリックするとメニューが閉じる
-import React from 'react';
+import React, { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import MenuList from './MenuList';
-import { Settings, Logout } from '@mui/icons-material';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
 
 const meta: Meta<typeof MenuList> = {
   title: 'Components/MenuList',
@@ -12,14 +13,14 @@ const meta: Meta<typeof MenuList> = {
   argTypes: {
     position: {
       control: 'select',
-      options: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
+      options: ['bottom-left', 'bottom-right'],
       defaultValue: 'bottom-right',
     },
     menuItems: {
       control: 'object',
       defaultValue: [
         { label: '設定', icon: <Settings /> },
-        { label: 'ログアウト', icon: <Logout /> }
+        { label: 'ログアウト', icon: <Logout /> },
       ],
     },
   },
@@ -32,8 +33,34 @@ export const Default: StoryObj<typeof MenuList> = {
     position: 'bottom-right',
     menuItems: [
       { label: '設定', icon: <Settings /> },
-      { label: 'ログアウト', icon: <Logout /> }
+      { label: 'ログアウト', icon: <Logout /> },
     ],
   },
-  render: (args) => <MenuList position={args.position} menuItems={args.menuItems} />,
+  render: (args) => {
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = (event: React.MouseEvent<HTMLElement>) => {
+      setAnchorEl(event.currentTarget);
+      setOpen(true);
+    };
+
+    const handleClose = () => {
+      setAnchorEl(null);
+      setOpen(false);
+    };
+
+    return (
+      <>
+        <button onClick={handleOpen}>Open Menu</button>
+        <MenuList
+          position={args.position}
+          menuItems={args.menuItems}
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+        />
+      </>
+    );
+  },
 };
