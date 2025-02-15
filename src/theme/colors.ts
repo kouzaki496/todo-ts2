@@ -2,9 +2,9 @@
 
 const colors = {
   primary: {
-    main: '#8e24aa',
-    light: '#e1bee7',
-    dark: '#4a148c',
+    main: '#6a1b9a',
+    light: '#9c4dcc',
+    dark: '#38006b',
   },
   secondary: {
     main: '#1e88e5',
@@ -12,14 +12,14 @@ const colors = {
     dark: '#0d47a1',
   },
   error: {
-    main: '#f44336',
-    light: '#e57373',
-    dark: '#d32f2f',
+    main: '#d32f2f',
+    light: '#ef9a9a',
+    dark: '#b71c1c',
   },
   warning: {
-    main: '#ffa726',
+    main: '#f57c00',
     light: '#ffb74d',
-    dark: '#f57c00',
+    dark: '#e65100',
   },
   info: {
     main: '#29b6f6',
@@ -37,7 +37,15 @@ const colors = {
   gray: {
     main: '#bdbdbd',
     light: '#eeeeee',
-    dark: '#388e3c',
+    dark: '#757575',
+  },
+  background: {
+    paper: '#f5f5f5',
+    default: '#fafafa',
+  },
+  text: {
+    primary: '#212121',
+    secondary: '#757575',
   },
 };
 
