@@ -1,12 +1,6 @@
 //src/hooks/useTodo.ts
 import { useState } from 'react';
-
-interface Todo {
-  id:number;
-  title:string;
-  completed:boolean;
-  dueDate:string;
-}
+import Todo from '../types/todo';
 
 export const useTodo = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
