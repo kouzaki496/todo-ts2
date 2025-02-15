@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { Menu, MenuItem, Button } from '@mui/material';
+import React, { useState, ReactNode } from 'react';
+import { Menu, MenuItem, Button, ListItemIcon } from '@mui/material';
 import { PopoverOrigin } from '@mui/material';
 
 interface UserMenuProps {
     position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
-    menuItems: string[];
+    menuItems: {label: string; icon?: ReactNode }[];
 }
 
 function MenuList({ position, menuItems }: UserMenuProps) {
@@ -47,7 +47,8 @@ function MenuList({ position, menuItems }: UserMenuProps) {
             >
                 {menuItems.map((item, index) => (
                     <MenuItem key={index} onClick={handleClose}>
-                        {item}
+                        {item.icon && <ListItemIcon>{item.icon}</ListItemIcon>}
+                        {item.label}
                     </MenuItem>
                 ))}
             </Menu>
