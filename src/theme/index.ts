@@ -4,6 +4,15 @@ import colors from './colors';
 import typography from './typography';
 import spacing from './spacing';
 
+declare module '@mui/material/styles' {
+  interface Palette {
+    gray: Palette['primary'];
+  }
+  interface PaletteOptions {
+    gray?: PaletteOptions['primary'];
+  }
+}
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -35,6 +44,11 @@ const theme = createTheme({
       main: colors.success.main,
       light: colors.success.light,
       dark: colors.success.dark,
+    },
+    gray: {
+      main: colors.gray.main,
+      light: colors.gray.light,
+      dark: colors.gray.dark,
     },
   },
   typography: typography,

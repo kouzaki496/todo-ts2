@@ -22,8 +22,8 @@ export const useTodo = () => {
   };
 
   //Todoを更新する
-  const updateTodo = (id:number, completed:boolean) => {
-    setTodos(todos.map((todo) => todo.id === id ? {...todo, completed} : todo));
+  const updateTodo = (id:number, updatedFields:Partial<Todo>) => {
+    setTodos(todos.map((todo) => (todo.id === id ? { ...todo, ...updatedFields } : todo)));
   };
 
   return {

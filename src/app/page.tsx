@@ -1,11 +1,21 @@
 // app/page.tsx
 "use client";
 
-import * as React from 'react';
+import React from 'react';
 import { Typography } from '@mui/material';
 import Button from '@/components/Button/Button'
+import { useTodo } from '../hooks/useTodo';
+import TodoItem from '../components/TodoItem/TodoItem';
 
 export default function Home() {
+  const { todos, addTodo, updateTodo, deleteTodo } = useTodo();
+
+  // 初期データを追加する例
+  React.useEffect(() => {
+    addTodo('Learn React', '2023-12-31');
+    addTodo('Build a Todo App', '2023-12-31');
+  }, []);
+
   return (
     <div>
       <Typography variant="h1" color="primary">Hello, MUI!</Typography>
@@ -29,6 +39,15 @@ export default function Home() {
         <Typography variant="caption">Caption text</Typography>
         <Typography variant="button">Button text</Typography>
       </div>
+      <h1>Todo List</h1>
+      {todos.map((todo) => (
+        <TodoItem
+          key={todo.id}
+          todo={todo}
+          updateTodo={updateTodo}
+          deleteTodo={deleteTodo}
+        />
+      ))}
     </div>
   );
 }

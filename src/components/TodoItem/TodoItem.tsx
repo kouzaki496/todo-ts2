@@ -1,19 +1,24 @@
 //src/components/TodoItem/TodoItem.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { TodoItemProps } from '../../types/todo';
-import { TextField, Button, Typography, Card, CardContent, CardActions, IconButton, Checkbox } from '@mui/material';
+import { Checkbox, TextField, Button, Typography, Card, CardContent, CardActions, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import EditIcon from '@mui/icons-material/Edit';
+import { styled } from '@mui/material/styles';
+
+const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
+  color: theme.palette.primary.main,
+  '&.Mui-checked': {
+    color: theme.palette.primary.dark,
+  },
+  '&:hover': {
+    backgroundColor: theme.palette.action.hover,
+  },
+}));
 
 const TodoItem = ({ todo, updateTodo, deleteTodo }: TodoItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState(todo.title);
-
-  useEffect(() => {
-    setEditedTitle(todo.title);
-  }, [todo.title]);
 
   const toggleStatus = () => {
     updateTodo(todo.id, { completed: !todo.completed });
@@ -29,12 +34,23 @@ const TodoItem = ({ todo, updateTodo, deleteTodo }: TodoItemProps) => {
   };
 
   return (
-    <Card variant="outlined" style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', marginBottom: '10px', padding: '10px' }}>
-      <Checkbox
-        checked={todo.completed}
-        onChange={toggleStatus}
-      />
-      <CardContent style={{ flexGrow: 1 }}>
+    <Card
+      variant="outlined"
+      sx={{
+        mb: 2,
+        display: 'flex',
+        alignItems: 'center',
+        boxShadow: 3,
+        borderRadius: 2,
+        backgroundColor: (theme) => (todo.completed ? theme.palette.gray.light : theme.palette.background.paper),
+      }}
+    >
+      <CardContent sx={{ flex: 1, display: 'flex', alignItems: 'center' }}>
+        <StyledCheckbox
+          color='primary'
+          checked={todo.completed}
+          onChange={toggleStatus}
+        />
         {isEditing ? (
           <TextField
             value={editedTitle}
@@ -42,31 +58,35 @@ const TodoItem = ({ todo, updateTodo, deleteTodo }: TodoItemProps) => {
             variant="outlined"
             size="small"
             fullWidth
+            sx={{ ml: 1 }}
           />
         ) : (
           <Typography
             variant="body1"
-            onClick={handleEdit}
-            style={{ textDecoration: todo.completed ? 'line-through' : 'none', cursor: 'pointer' }}
+            sx={{ cursor: 'pointer', ml: 1 }}
           >
             {todo.title}
           </Typography>
         )}
         {todo.dueDate && (
-          <Typography variant="caption" color="textSecondary" style={{ marginTop: '10px' }}>
+          <Typography variant="caption" color="textSecondary" sx={{ ml: 'auto', mr: 1 }}>
             期限: {todo.dueDate}
           </Typography>
         )}
       </CardContent>
-      <CardActions>
-        {isEditing && (
-          <Button onClick={handleSave} variant="contained" color="primary" size="small">
+      <CardActions sx={{ display: 'flex', alignItems: 'center' }}>
+        {isEditing ? (
+          <Button onClick={handleSave} variant="contained" color="primary" size="small" sx={{ mr: 1 }}>
             保存
           </Button>
+        ) : (
+          <IconButton onClick={handleEdit} color="secondary">
+            <EditIcon />
+          </IconButton>
         )}
-        <Button onClick={() => deleteTodo(todo.id)} variant="outlined" color="secondary" size="small">
-          削除
-        </Button>
+        <IconButton onClick={() => deleteTodo(todo.id)} color="default">
+          <DeleteIcon />
+        </IconButton>
       </CardActions>
     </Card>
   );
