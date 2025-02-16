@@ -1,14 +1,14 @@
 import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import TodoItem from './TodoItem';
 import { TodoItemProps } from '../../types/todo';
 
 export default {
   title: 'Components/TodoItem',
   component: TodoItem,
-} as ComponentMeta<typeof TodoItem>;
+} as Meta<typeof TodoItem>;
 
-const Template: ComponentStory<typeof TodoItem> = (args) => <TodoItem {...args} />;
+const Template: StoryFn<typeof TodoItem> = (args) => <TodoItem {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {
@@ -16,7 +16,7 @@ Default.args = {
     id: 1,
     title: 'Sample Task',
     completed: false,
-    dueDate: new Date(Date.now() + 86400000).toISOString().split('T')[0], // 明日の日付
+    dueDate: new Date().toISOString().split('T')[0],
   },
   updateTodo: (id, updatedFields) => console.log('Update Todo:', id, updatedFields),
   deleteTodo: (id) => console.log('Delete Todo:', id),

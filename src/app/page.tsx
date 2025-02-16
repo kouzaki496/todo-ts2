@@ -1,14 +1,44 @@
 // app/page.tsx
 "use client";
 
-import React from 'react';
-import { Typography } from '@mui/material';
-import Button from '@/components/Button/Button'
+import React, { useState } from 'react';
+import { Box, Container, Typography } from '@mui/material';
 import { useTodo } from '../hooks/useTodo';
-import TodoItem from '../components/TodoItem/TodoItem';
+import TodoList from '../components/TodoList/TodoList';
+import Header from '../components/Header/Header';
+import AddTodoButton from '../components/AddTodoButton/AddTodoButton';
+import TodoModal from '../components/Modals/TodoModal';
+import Todo from '../types/todo';
 
-export default function Home() {
+const initialTodos: Todo[] = [
+  {
+    id: 1,
+    title: 'Sample Task 1',
+    completed: false,
+    dueDate: new Date(Date.now() + 86400000).toISOString().split('T')[0], // 明日の日付
+    details: 'This is a sample task detail.',
+  },
+  {
+    id: 2,
+    title: 'Sample Task 2',
+    completed: true,
+    dueDate: new Date().toISOString().split('T')[0], // 今日の日付
+    details: 'This task is completed.',
+  },
+  {
+    id: 3,
+    title: 'Sample Task 3',
+    completed: false,
+    dueDate: new Date(Date.now() - 86400000).toISOString().split('T')[0], // 昨日の日付
+    details: 'This task is overdue.',
+  },
+];
+
+const Page: React.FC = () => {
   const { todos, addTodo, updateTodo, deleteTodo } = useTodo();
+  const [localTodos, setLocalTodos] = useState<Todo[]>(initialTodos);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
 
   // 初期データを追加する例
   React.useEffect(() => {
@@ -16,38 +46,62 @@ export default function Home() {
     addTodo('Build a Todo App', '2023-12-31');
   }, []);
 
+  const handleUpdateTodo = (id: number, updatedFields: Partial<Todo>) => {
+    setLocalTodos((prevTodos) =>
+      prevTodos.map((todo) =>
+        todo.id === id ? { ...todo, ...updatedFields } : todo
+      )
+    );
+  };
+
+  const handleDeleteTodo = (id: number) => {
+    setLocalTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
+  };
+
+  const handleAddTodo = (title: string, dueDate: string, details: string, completed: boolean) => {
+    const newTodo: Todo = {
+      id: localTodos.length + 1,
+      title,
+      completed,
+      dueDate,
+      details,
+    };
+    setLocalTodos((prevTodos) => [...prevTodos, newTodo]);
+  };
+
+  const handleEditTodo = (todo: Todo) => {
+    setSelectedTodo(todo);
+    setIsModalOpen(true);
+  };
+
+  const handleSaveTodo = (title: string, dueDate: string, details: string, completed: boolean) => {
+    if (selectedTodo) {
+      handleUpdateTodo(selectedTodo.id, { title, dueDate, details, completed });
+    } else {
+      handleAddTodo(title, dueDate, details, completed);
+    }
+    setIsModalOpen(false);
+    setSelectedTodo(null);
+  };
+
   return (
-    <div>
-      <Typography variant="h1" color="primary">Hello, MUI!</Typography>
-      <Button variant="contained" color="primary">
-        Primary Button
-      </Button>
-      <Button variant="contained" color="secondary">
-        Secondary Button
-      </Button>
-      <div>
-        <Typography variant="h1" color="primary.dark">Heading 1</Typography>
-        <Typography variant="h2">Heading 2</Typography>
-        <Typography variant="h3">Heading 3</Typography>
-        <Typography variant="h4">Heading 4</Typography>
-        <Typography variant="h5">Heading 5</Typography>
-        <Typography variant="h6">Heading 6</Typography>
-        <Typography variant="subtitle1">Subtitle 1</Typography>
-        <Typography variant="subtitle2">Subtitle 2</Typography>
-        <Typography variant="body1">Body 1 text</Typography>
-        <Typography variant="body2">Body 2 text</Typography>
-        <Typography variant="caption">Caption text</Typography>
-        <Typography variant="button">Button text</Typography>
-      </div>
-      <h1>Todo List</h1>
-      {todos.map((todo) => (
-        <TodoItem
-          key={todo.id}
-          todo={todo}
-          updateTodo={updateTodo}
-          deleteTodo={deleteTodo}
+    <Container maxWidth="lg">
+      <Header title="My Todo App" />
+      <Box sx={{ mt: 4, mb: 4 }}>
+        <Typography variant="h4" component="h1" gutterBottom>
+          Todo List
+        </Typography>
+        <TodoList todos={localTodos} updateTodo={handleUpdateTodo} deleteTodo={handleDeleteTodo} />
+        <AddTodoButton onClick={() => setIsModalOpen(true)} />
+        <TodoModal
+          open={isModalOpen}
+          todo={selectedTodo}
+          onClose={() => setIsModalOpen(false)}
+          onSave={handleSaveTodo}
         />
-      ))}
-    </div>
+      </Box>
+    </Container>
   );
-}
+};
+
+export default Page;

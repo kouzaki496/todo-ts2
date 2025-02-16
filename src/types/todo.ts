@@ -1,9 +1,10 @@
 //src/types/todo.ts
-interface Todo {
+export interface Todo {
   id: number;
   title: string;
   completed: boolean;
   dueDate: string;
+  details?: string;
 }
 
 export interface TodoItemProps {

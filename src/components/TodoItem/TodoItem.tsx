@@ -6,7 +6,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import { styled } from '@mui/material/styles';
-import EditTodoModal from './EditTodoModal';
+import TodoModal from '../Modals/TodoModal';
 
 const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
   color: theme.palette.primary.main,
@@ -16,6 +16,7 @@ const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
   '&:hover': {
     backgroundColor: theme.palette.action.hover,
   },
+  transform: 'scale(1.2)',
 }));
 
 const TodoItem = ({ todo, updateTodo, deleteTodo }: TodoItemProps) => {
@@ -29,8 +30,8 @@ const TodoItem = ({ todo, updateTodo, deleteTodo }: TodoItemProps) => {
     setIsEditing(true);
   };
 
-  const handleSave = (updatedTitle: string, updatedDueDate: string) => {
-    updateTodo(todo.id, { title: updatedTitle, dueDate: updatedDueDate });
+  const handleSave = (updatedTitle: string, updatedDueDate: string, updatedDetails: string, updatedCompleted: boolean) => {
+    updateTodo(todo.id, { title: updatedTitle, dueDate: updatedDueDate, details: updatedDetails, completed: updatedCompleted });
     setIsEditing(false);
   };
 
@@ -47,14 +48,18 @@ const TodoItem = ({ todo, updateTodo, deleteTodo }: TodoItemProps) => {
           mb: 2,
           display: 'flex',
           alignItems: 'center',
-          boxShadow: 3,
-          borderRadius: 2,
-          backgroundColor: (theme) => todo.completed ? theme.palette.grey[200] : theme.palette.background.paper,
+          boxShadow: 4,
+          borderRadius: 3,
+          backgroundColor: (theme) => todo.completed ? theme.palette.grey[100] : theme.palette.background.paper,
           borderColor: (theme) => {
             if (todo.completed) return theme.palette.divider;
             if (isOverdue) return theme.palette.error.main;
             if (isDueToday) return theme.palette.warning.main;
             return theme.palette.divider;
+          },
+          transition: 'transform 0.2s',
+          '&:hover': {
+            transform: 'scale(1.02)',
           },
         }}
       >
@@ -70,6 +75,7 @@ const TodoItem = ({ todo, updateTodo, deleteTodo }: TodoItemProps) => {
               sx={{
                 cursor: 'pointer',
                 color: todo.completed ? 'gray' : 'text.primary',
+                textDecoration: todo.completed ? 'line-through' : 'none',
               }}
             >
               {todo.title}
@@ -94,7 +100,7 @@ const TodoItem = ({ todo, updateTodo, deleteTodo }: TodoItemProps) => {
           </IconButton>
         </CardActions>
       </Card>
-      <EditTodoModal
+      <TodoModal
         open={isEditing}
         todo={todo}
         onClose={() => setIsEditing(false)}
