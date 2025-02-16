@@ -12,11 +12,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <head>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap"
-          rel="stylesheet"
-        />
-        <link href="https://fonts.googleapis.com/css2?family=YourFontName&display=swap" rel="stylesheet" />
+        {/* フォントのリンクを削除 */}
       </head>
       <body className={inter.className}>
         <ThemeProvider theme={theme}>

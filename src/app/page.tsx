@@ -35,7 +35,7 @@ const initialTodos: Todo[] = [
 ];
 
 const Page: React.FC = () => {
-  const { todos, addTodo, updateTodo, deleteTodo } = useTodo();
+  const { addTodo } = useTodo();
   const [localTodos, setLocalTodos] = useState<Todo[]>(initialTodos);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
@@ -44,7 +44,7 @@ const Page: React.FC = () => {
   React.useEffect(() => {
     addTodo('Learn React', '2023-12-31');
     addTodo('Build a Todo App', '2023-12-31');
-  }, []);
+  }, [addTodo]);
 
   const handleUpdateTodo = (id: number, updatedFields: Partial<Todo>) => {
     setLocalTodos((prevTodos) =>
@@ -67,11 +67,6 @@ const Page: React.FC = () => {
       details,
     };
     setLocalTodos((prevTodos) => [...prevTodos, newTodo]);
-  };
-
-  const handleEditTodo = (todo: Todo) => {
-    setSelectedTodo(todo);
-    setIsModalOpen(true);
   };
 
   const handleSaveTodo = (title: string, dueDate: string, details: string, completed: boolean) => {

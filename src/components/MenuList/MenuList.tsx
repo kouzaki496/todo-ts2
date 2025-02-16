@@ -2,15 +2,15 @@ import React, { ReactNode } from 'react';
 import { Menu, MenuItem, ListItemIcon } from '@mui/material';
 import { PopoverOrigin } from '@mui/material';
 
-interface UserMenuProps {
+export interface UserMenuProps {
     position: 'bottom-left' | 'bottom-right';
-    menuItems: { label: string; icon?: ReactNode; onClick?: () => void }[];
+    menuItems: Array<{ label: string; icon?: ReactNode; onClick?: () => void }>;
     anchorEl: HTMLElement | null;
     open: boolean;
     onClose: () => void;
 }
 
-function MenuList({ position, menuItems, anchorEl, open, onClose }: UserMenuProps) {
+const MenuList = ({ position, menuItems, anchorEl, open, onClose }: UserMenuProps) => {
     const anchorOrigin: PopoverOrigin = {
         'bottom-left': { vertical: 'bottom', horizontal: 'left' },
         'bottom-right': { vertical: 'bottom', horizontal: 'right' },
@@ -38,6 +38,6 @@ function MenuList({ position, menuItems, anchorEl, open, onClose }: UserMenuProp
             ))}
         </Menu>
     );
-}
+};
 
 export default MenuList;

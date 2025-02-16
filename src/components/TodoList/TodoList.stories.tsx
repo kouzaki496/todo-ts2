@@ -1,14 +1,13 @@
 import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import TodoList from './TodoList';
-import { Todo } from '../../types/todo';
 
 export default {
   title: 'Components/TodoList',
   component: TodoList,
-} as ComponentMeta<typeof TodoList>;
+} as Meta<typeof TodoList>;
 
-const Template: ComponentStory<typeof TodoList> = (args) => <TodoList {...args} />;
+const Template: StoryFn<typeof TodoList> = (args) => <TodoList {...args} />;
 
 export const Default = Template.bind({});
 Default.args = {

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
 import TodoItem from './TodoItem';
-import { TodoItemProps } from '../../types/todo';
 
 export default {
   title: 'Components/TodoItem',
