@@ -18,7 +18,8 @@ module.exports = {
   ignorePatterns: [
     "/lib/**/*",
     "*.config.js",
-    "../*",  // プロジェクトのルートディレクトリを無視
+    "../*",
+    "node_modules"
   ],
   plugins: [
     "@typescript-eslint"
