@@ -30,9 +30,10 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         component="main"
         sx={{
           flexGrow: 1,
-          p: 3,
+          paddingTop: { xs: 1, sm: 2, md: 3 },
           width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
           minHeight: '100%',
+          maxWidth: '100%',
         }}
       >
         {children}

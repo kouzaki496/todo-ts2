@@ -21,7 +21,7 @@ export const TodoCard: React.FC<TodoCardProps> = ({
 }) => (
   <Card
     variant="outlined"
-    onClick={onClick}
+    onClick={isBulkDeleteMode ? undefined : onClick}
     sx={{
       mb: 2,
       display: 'flex',
@@ -30,15 +30,17 @@ export const TodoCard: React.FC<TodoCardProps> = ({
       boxShadow: 4,
       borderRadius: 3,
       backgroundColor: isSelected ? 'action.selected' : (isCompleted ? 'grey.100' : 'background.paper'),
+      outline: isSelected ? '2px solid' : 'none',
+      outlineColor: 'primary.main',
       borderColor: (theme) => {
         if (isCompleted) return theme.palette.divider;
         if (isOverdue) return theme.palette.error.main;
         if (isDueToday) return theme.palette.warning.main;
         return theme.palette.divider;
       },
-      transition: 'transform 0.2s',
+      transition: 'all 0.2s',
       '&:hover': {
-        transform: 'scale(1.02)',
+        transform: isBulkDeleteMode ? 'none' : 'scale(1.02)',
       },
     }}
   >

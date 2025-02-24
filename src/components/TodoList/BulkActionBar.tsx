@@ -1,9 +1,18 @@
 import React from 'react';
-import { Box, Button, ButtonGroup, useTheme, useMediaQuery, Fade, Paper } from '@mui/material';
+import {
+  SpeedDial,
+  SpeedDialAction,
+  SpeedDialIcon,
+  Badge,
+  useTheme,
+  useMediaQuery
+} from '@mui/material';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import SelectAllIcon from '@mui/icons-material/SelectAll';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ClearIcon from '@mui/icons-material/Clear';
+import CloseIcon from '@mui/icons-material/Close';
+import { LAYOUT } from '../../constants/layout';
 
 interface BulkActionBarProps {
   isBulkDeleteMode: boolean;
@@ -27,105 +36,71 @@ export const BulkActionBar: React.FC<BulkActionBarProps> = ({
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
+  const actions = [
+    { icon: <SelectAllIcon />, name: '全て選択', onClick: onSelectAll },
+    { icon: <CheckCircleIcon />, name: '完了済みを選択', onClick: onSelectCompleted },
+    { icon: <ClearIcon />, name: '選択解除', onClick: onClearSelection },
+    {
+      icon: <DeleteSweepIcon />,
+      name: `選択したタスクを削除 (${selectedCount})`,
+      onClick: onBulkDelete,
+      disabled: selectedCount === 0
+    },
+  ];
+
   return (
-    <Paper
-      elevation={0}
+    <SpeedDial
+      ariaLabel="一括操作メニュー"
+      direction="down"
       sx={{
-        p: 2,
-        mb: 3,
-        borderRadius: 2,
-        bgcolor: 'transparent',
-        transition: 'all 0.3s ease',
+        position: 'fixed',
+        top: LAYOUT.HEADER_HEIGHT + 20,
+        right: 16,
+        '& .MuiSpeedDial-fab': {
+          width: 48,
+          height: 48,
+          bgcolor: isBulkDeleteMode ? 'error.main' : 'primary.main',
+          '&:hover': {
+            bgcolor: isBulkDeleteMode ? 'error.dark' : 'primary.dark',
+          },
+        },
+        '& .MuiSpeedDial-actions': {
+          paddingTop: 1,
+          gap: 1,
+          marginTop: 1,
+        },
+        zIndex: 1,
       }}
+      icon={
+        <Badge badgeContent={selectedCount} color="secondary">
+          <SpeedDialIcon
+            icon={<DeleteSweepIcon />}
+            openIcon={<CloseIcon />}
+          />
+        </Badge>
+      }
+      open={isBulkDeleteMode}
+      onClick={onToggleBulkDeleteMode}
     >
-      <Box sx={{
-        display: 'flex',
-        flexDirection: isMobile ? 'column' : 'row',
-        justifyContent: 'space-between',
-        gap: 2,
-      }}>
-        <Button
-          variant={isBulkDeleteMode ? "contained" : "outlined"}
-          color={isBulkDeleteMode ? "error" : "primary"}
-          onClick={onToggleBulkDeleteMode}
-          startIcon={<DeleteSweepIcon />}
-          fullWidth={isMobile}
+      {isBulkDeleteMode && actions.map((action) => (
+        <SpeedDialAction
+          key={action.name}
+          icon={action.icon}
+          tooltipTitle={action.name}
+          onClick={(e) => {
+            e.stopPropagation();
+            action.onClick();
+          }}
+          FabProps={{
+            disabled: action.disabled,
+          }}
           sx={{
-            borderRadius: 2,
-            transition: 'all 0.2s ease',
-            '&:hover': {
-              bgcolor: isBulkDeleteMode
-                ? 'error.dark'
-                : 'action.hover',
+            '&.Mui-disabled': {
+              bgcolor: 'action.disabledBackground',
             },
           }}
-        >
-          {isBulkDeleteMode ? '一括削除モードを終了' : '一括削除モードを開始'}
-        </Button>
-
-        <Fade in={isBulkDeleteMode}>
-          <Box sx={{
-            display: 'flex',
-            flexDirection: isMobile ? 'column' : 'row',
-            gap: 2,
-            width: isMobile ? '100%' : 'auto',
-          }}>
-            <ButtonGroup
-              variant="outlined"
-              color="primary"
-              orientation={isMobile ? 'vertical' : 'horizontal'}
-              fullWidth={isMobile}
-              sx={{
-                '& .MuiButton-root': {
-                  borderRadius: '8px !important',
-                  m: '1px',
-                  transition: 'all 0.2s ease',
-                  '&:hover:not(:disabled)': {
-                    bgcolor: 'action.hover',
-                  },
-                },
-              }}
-            >
-              <Button
-                onClick={onSelectAll}
-                startIcon={<SelectAllIcon />}
-              >
-                全て選択
-              </Button>
-              <Button
-                onClick={onSelectCompleted}
-                startIcon={<CheckCircleIcon />}
-              >
-                完了済みを選択
-              </Button>
-              <Button
-                onClick={onClearSelection}
-                startIcon={<ClearIcon />}
-                disabled={selectedCount === 0}
-              >
-                選択解除
-              </Button>
-            </ButtonGroup>
-
-            <Button
-              variant="contained"
-              color="error"
-              onClick={onBulkDelete}
-              disabled={selectedCount === 0}
-              fullWidth={isMobile}
-              sx={{
-                borderRadius: 2,
-                transition: 'all 0.2s ease',
-                '&:hover:not(:disabled)': {
-                  bgcolor: 'error.dark',
-                },
-              }}
-            >
-              選択したタスクを削除 ({selectedCount})
-            </Button>
-          </Box>
-        </Fade>
-      </Box>
-    </Paper>
+        />
+      ))}
+    </SpeedDial>
   );
 };

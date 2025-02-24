@@ -15,7 +15,10 @@ interface TodoListProps {
 
 const TodoList: React.FC<TodoListProps> = ({ todos, ...props }) => {
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{
+      width: '100%',
+      transition: 'padding 0.2s ease',  // スムーズな切り替え
+    }}>
       {todos.map((todo) => (
         <TodoListItem
           key={todo.id}

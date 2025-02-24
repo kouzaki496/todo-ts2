@@ -19,17 +19,29 @@ export const TodoListItem: React.FC<TodoListItemProps> = ({
       display: 'flex',
       alignItems: 'center',
       gap: 1,
-      mb: 2,
+      mb: { xs: 0, sm: 1 },
+      mx: { xs: 0, sm: 1 },
+      cursor: isBulkDeleteMode ? 'pointer' : 'default',
     }}
+    onClick={() => isBulkDeleteMode && onToggleSelect()}
   >
     {isBulkDeleteMode && (
       <StyledDeleteCheckbox
         checked={isSelected}
-        onChange={onToggleSelect}
-        sx={{ ml: 1 }}
+        onChange={() => {}}
+        sx={{
+          p: 0.5,
+          '& .MuiSvgIcon-root': {
+            fontSize: 20,
+          },
+        }}
       />
     )}
-    <Box sx={{ flex: 1 }}>
+    <Box sx={{
+      flex: 1,
+      opacity: isBulkDeleteMode && isSelected ? 0.8 : 1,
+      transition: 'opacity 0.2s ease',
+    }}>
       {children}
     </Box>
   </Box>

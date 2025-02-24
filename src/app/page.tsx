@@ -11,6 +11,7 @@ import TodoModal from '../components/Modals/TodoModal';
 import Todo from '../types/todo';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import { BulkActionBar } from '../components/TodoList/BulkActionBar';
+import { FloatingActions } from '../components/FloatingActions/FloatingActions';
 
 const initialTodos: Todo[] = [
   {
@@ -157,7 +158,7 @@ const Page: React.FC = () => {
           onToggleSelect={handleToggleSelect}
           isBulkDeleteMode={isBulkDeleteMode}
         />
-        <AddTodoButton onClick={() => setIsModalOpen(true)} />
+        <FloatingActions onAddClick={() => setIsModalOpen(true)} />
         <TodoModal
           open={isModalOpen}
           todo={selectedTodo}
