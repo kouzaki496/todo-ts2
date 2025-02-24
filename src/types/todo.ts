@@ -5,7 +5,7 @@ export interface Todo {
   completed: boolean;
   dueDate: string;
   details?: string;
-  selected?: boolean;
+  selected: boolean;
 }
 
 export interface TodoItemProps {

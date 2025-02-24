@@ -2,6 +2,7 @@ import React from 'react';
 import Todo from '../../types/todo';
 import TodoItem from '../TodoItem/TodoItem';
 import { Box, Checkbox } from '@mui/material';
+import { TodoListItem } from './TodoListItem';
 
 interface TodoListProps {
   todos: Todo[];
@@ -12,54 +13,25 @@ interface TodoListProps {
   isBulkDeleteMode: boolean;
 }
 
-const TodoList: React.FC<TodoListProps> = ({ todos, updateTodo, onEdit, deleteTodo, onToggleSelect, isBulkDeleteMode }) => {
+const TodoList: React.FC<TodoListProps> = ({ todos, ...props }) => {
   return (
     <Box sx={{ width: '100%' }}>
       {todos.map((todo) => (
-        <Box
+        <TodoListItem
           key={todo.id}
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: 1,
-            mb: 2,
-          }}
+          isBulkDeleteMode={props.isBulkDeleteMode}
+          isSelected={todo.selected}
+          onToggleSelect={() => props.onToggleSelect(todo.id)}
         >
-          {isBulkDeleteMode && (
-            <Checkbox
-              checked={todo.selected}
-              onChange={() => onToggleSelect(todo.id)}
-              color="primary"
-              sx={{
-                ml: 1,
-                height: '100%',
-                display: 'flex',
-                alignItems: 'center',
-                '& .MuiSvgIcon-root': {
-                  fontSize: 28,
-                },
-                color: 'error.main',
-                '&.Mui-checked': {
-                  color: 'error.main',
-                },
-                '&:hover': {
-                  backgroundColor: 'error.light',
-                  opacity: 0.1,
-                },
-              }}
-            />
-          )}
-          <Box sx={{ flex: 1 }}>
-            <TodoItem
-              todo={todo}
-              updateTodo={updateTodo}
-              onEdit={onEdit}
-              deleteTodo={deleteTodo}
-              onToggleSelect={onToggleSelect}
-              isBulkDeleteMode={isBulkDeleteMode}
-            />
-          </Box>
-        </Box>
+          <TodoItem
+            todo={todo}
+            updateTodo={props.updateTodo}
+            onEdit={props.onEdit}
+            deleteTodo={props.deleteTodo}
+            onToggleSelect={props.onToggleSelect}
+            isBulkDeleteMode={props.isBulkDeleteMode}
+          />
+        </TodoListItem>
       ))}
     </Box>
   );
