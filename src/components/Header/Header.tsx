@@ -26,7 +26,7 @@ const Header = ({ title, subtitle }: HeaderProps) => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
     });
-    return () => unsubscribe();
+    return unsubscribe;
   }, []);
 
   const handleSignIn = async () => {
@@ -48,7 +48,7 @@ const Header = ({ title, subtitle }: HeaderProps) => {
 
   const handleAvatarClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
-    setMenuOpen((prev) => !prev);
+    setMenuOpen(true);
   };
 
   const handleMenuClose = () => {

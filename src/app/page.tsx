@@ -40,12 +40,6 @@ const Page: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
 
-  // 初期データを追加する例
-  React.useEffect(() => {
-    addTodo('Learn React', '2023-12-31');
-    addTodo('Build a Todo App', '2023-12-31');
-  }, [addTodo]);
-
   const handleUpdateTodo = (id: number, updatedFields: Partial<Todo>) => {
     setLocalTodos((prevTodos) =>
       prevTodos.map((todo) =>
