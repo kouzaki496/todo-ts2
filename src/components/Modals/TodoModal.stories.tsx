@@ -1,0 +1,55 @@
+import type { Meta, StoryObj } from '@storybook/react';
+import TodoModal from './TodoModal';
+
+const meta = {
+  title: 'Components/Modals/TodoModal',
+  component: TodoModal,
+  parameters: {
+    layout: 'centered',
+  },
+  tags: ['autodocs'],
+} satisfies Meta<typeof TodoModal>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+// サンプルのTodoデータ
+const sampleTodo = {
+  id: 1,
+  title: 'Sample Task',
+  completed: false,
+  dueDate: new Date().toISOString().split('T')[0],
+  details: 'This is a sample task detail.',
+};
+
+export const NewTodo: Story = {
+  args: {
+    open: true,
+    todo: null,
+    onClose: () => console.log('Modal closed'),
+    onSave: (title, dueDate, details, completed) =>
+      console.log('Saved:', { title, dueDate, details, completed }),
+  },
+};
+
+export const EditTodo: Story = {
+  args: {
+    open: true,
+    todo: sampleTodo,
+    onClose: () => console.log('Modal closed'),
+    onSave: (title, dueDate, details, completed) =>
+      console.log('Saved:', { title, dueDate, details, completed }),
+    onDelete: (id) => console.log('Deleted:', id),
+  },
+};
+
+export const ClosedModal: Story = {
+  args: {
+    open: false,
+    todo: null,
+    onClose: () => console.log('Modal closed'),
+    onSave: (title, dueDate, details, completed) =>
+      console.log('Saved:', { title, dueDate, details, completed }),
+    onDelete: (id) => console.log('Deleted:', id),
+  },
+};

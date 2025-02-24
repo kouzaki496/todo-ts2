@@ -9,8 +9,9 @@ export interface Todo {
 
 export interface TodoItemProps {
   todo: Todo;
-  updateTodo: (id: number, updatedTask: Partial<Todo>) => void;
+  updateTodo: (id: number, updatedFields: Partial<Todo>) => void;
   deleteTodo: (id: number) => void;
+  onEdit: (todo: Todo) => void;
 }
 
 export default Todo;

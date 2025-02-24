@@ -1,8 +1,7 @@
 //src/components/TodoItem/TodoItem.tsx
 import React, { useState } from 'react';
 import { TodoItemProps } from '../../types/todo';
-import { Checkbox, Typography, Card, CardContent, CardActions, IconButton, Box } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { Checkbox, Typography, Card, CardContent, Box, CardActions, IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import { styled } from '@mui/material/styles';
@@ -19,7 +18,7 @@ const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
   transform: 'scale(1.2)',
 }));
 
-const TodoItem = ({ todo, updateTodo, deleteTodo }: TodoItemProps) => {
+const TodoItem = ({ todo, updateTodo, deleteTodo, onEdit }: TodoItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const toggleStatus = () => {
@@ -95,9 +94,6 @@ const TodoItem = ({ todo, updateTodo, deleteTodo }: TodoItemProps) => {
           <IconButton onClick={handleEdit} color="secondary">
             <EditIcon />
           </IconButton>
-          <IconButton onClick={() => deleteTodo(todo.id)} color="default">
-            <DeleteIcon />
-          </IconButton>
         </CardActions>
       </Card>
       <TodoModal
@@ -105,6 +101,7 @@ const TodoItem = ({ todo, updateTodo, deleteTodo }: TodoItemProps) => {
         todo={todo}
         onClose={() => setIsEditing(false)}
         onSave={handleSave}
+        onDelete={deleteTodo}
       />
     </>
   );

@@ -5,10 +5,11 @@ import TodoItem from '../TodoItem/TodoItem';
 interface TodoListProps {
   todos: Todo[];
   updateTodo: (id: number, updatedFields: Partial<Todo>) => void;
+  onEdit: (todo: Todo) => void;
   deleteTodo: (id: number) => void;
 }
 
-const TodoList: React.FC<TodoListProps> = ({ todos, updateTodo, deleteTodo }) => {
+const TodoList: React.FC<TodoListProps> = ({ todos, updateTodo, onEdit, deleteTodo }) => {
   return (
     <div>
       {todos.map((todo) => (
@@ -16,6 +17,7 @@ const TodoList: React.FC<TodoListProps> = ({ todos, updateTodo, deleteTodo }) =>
           key={todo.id}
           todo={todo}
           updateTodo={updateTodo}
+          onEdit={onEdit}
           deleteTodo={deleteTodo}
         />
       ))}

@@ -54,7 +54,7 @@ const Page: React.FC = () => {
 
   const handleAddTodo = (title: string, dueDate: string, details: string, completed: boolean) => {
     const newTodo: Todo = {
-      id: localTodos.length + 1,
+      id: Math.max(...localTodos.map(todo => todo.id), 0) + 1,
       title,
       completed,
       dueDate,
@@ -73,6 +73,11 @@ const Page: React.FC = () => {
     setSelectedTodo(null);
   };
 
+  const handleEditTodo = (todo: Todo) => {
+    setSelectedTodo(todo);
+    setIsModalOpen(true);
+  };
+
   return (
     <Container maxWidth="lg">
       <Header title="My Todo App" />
@@ -80,13 +85,22 @@ const Page: React.FC = () => {
         <Typography variant="h4" component="h1" gutterBottom>
           Todo List
         </Typography>
-        <TodoList todos={localTodos} updateTodo={handleUpdateTodo} deleteTodo={handleDeleteTodo} />
+        <TodoList
+          todos={localTodos}
+          updateTodo={handleUpdateTodo}
+          onEdit={handleEditTodo}
+          deleteTodo={handleDeleteTodo}
+        />
         <AddTodoButton onClick={() => setIsModalOpen(true)} />
         <TodoModal
           open={isModalOpen}
           todo={selectedTodo}
-          onClose={() => setIsModalOpen(false)}
+          onClose={() => {
+            setIsModalOpen(false);
+            setSelectedTodo(null);
+          }}
           onSave={handleSaveTodo}
+          onDelete={handleDeleteTodo}
         />
       </Box>
     </Container>

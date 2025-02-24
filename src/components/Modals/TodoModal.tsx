@@ -7,9 +7,10 @@ interface TodoModalProps {
   todo: Todo | null;
   onClose: () => void;
   onSave: (updatedTitle: string, updatedDueDate: string, updatedDetails: string, updatedCompleted: boolean) => void;
+  onDelete?: (id: number) => void;
 }
 
-const TodoModal: React.FC<TodoModalProps> = ({ open, todo, onClose, onSave }) => {
+const TodoModal: React.FC<TodoModalProps> = ({ open, todo, onClose, onSave, onDelete }) => {
   const [editedTitle, setEditedTitle] = useState(todo?.title || '');
   const [editedDueDate, setEditedDueDate] = useState(todo?.dueDate || new Date().toISOString().split('T')[0]);
   const [editedDetails, setEditedDetails] = useState(todo?.details || '');
@@ -90,6 +91,18 @@ const TodoModal: React.FC<TodoModalProps> = ({ open, todo, onClose, onSave }) =>
         </Box>
       </DialogContent>
       <DialogActions>
+        {todo && onDelete && (
+          <Button
+            onClick={() => {
+              onDelete(todo.id);
+              onClose();
+            }}
+            color="error"
+            sx={{ mr: 'auto' }}
+          >
+            削除
+          </Button>
+        )}
         <Button onClick={onClose} color="secondary">
           キャンセル
         </Button>
