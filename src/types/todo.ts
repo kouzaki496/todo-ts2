@@ -5,6 +5,7 @@ export interface Todo {
   completed: boolean;
   dueDate: string;
   details?: string;
+  selected?: boolean;
 }
 
 export interface TodoItemProps {
@@ -12,6 +13,17 @@ export interface TodoItemProps {
   updateTodo: (id: number, updatedFields: Partial<Todo>) => void;
   deleteTodo: (id: number) => void;
   onEdit: (todo: Todo) => void;
+  onToggleSelect: (id: number) => void;
+  isBulkDeleteMode: boolean;
+}
+
+export interface TodoListProps {
+  todos: Todo[];
+  updateTodo: (id: number, updatedFields: Partial<Todo>) => void;
+  onEdit: (todo: Todo) => void;
+  deleteTodo: (id: number) => void;
+  onToggleSelect: (id: number) => void;
+  isBulkDeleteMode: boolean;
 }
 
 export default Todo;

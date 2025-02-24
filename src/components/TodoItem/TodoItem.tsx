@@ -15,10 +15,12 @@ const StyledCheckbox = styled(Checkbox)(({ theme }) => ({
   '&:hover': {
     backgroundColor: theme.palette.action.hover,
   },
-  transform: 'scale(1.2)',
+  '& .MuiSvgIcon-root': {
+    fontSize: 24,
+  },
 }));
 
-const TodoItem = ({ todo, updateTodo, deleteTodo, onEdit }: TodoItemProps) => {
+const TodoItem = ({ todo, updateTodo, deleteTodo, onEdit, onToggleSelect, isBulkDeleteMode }: TodoItemProps) => {
   const [isEditing, setIsEditing] = useState(false);
 
   const toggleStatus = () => {
@@ -43,13 +45,19 @@ const TodoItem = ({ todo, updateTodo, deleteTodo, onEdit }: TodoItemProps) => {
     <>
       <Card
         variant="outlined"
+        onClick={(e) => {
+          if (!isBulkDeleteMode) {
+            onEdit(todo);
+          }
+        }}
         sx={{
           mb: 2,
           display: 'flex',
           alignItems: 'center',
+          cursor: isBulkDeleteMode ? 'default' : 'pointer',
           boxShadow: 4,
           borderRadius: 3,
-          backgroundColor: (theme) => todo.completed ? theme.palette.grey[100] : theme.palette.background.paper,
+          backgroundColor: todo.selected ? 'action.selected' : (todo.completed ? 'grey.100' : 'background.paper'),
           borderColor: (theme) => {
             if (todo.completed) return theme.palette.divider;
             if (isOverdue) return theme.palette.error.main;
@@ -66,7 +74,11 @@ const TodoItem = ({ todo, updateTodo, deleteTodo, onEdit }: TodoItemProps) => {
           <StyledCheckbox
             color='primary'
             checked={todo.completed}
-            onChange={toggleStatus}
+            onChange={(e) => {
+              e.stopPropagation();
+              toggleStatus();
+            }}
+            onClick={(e) => e.stopPropagation()}
           />
           <Box sx={{ display: 'flex', alignItems: 'center', ml: 1 }}>
             <Typography
@@ -90,11 +102,13 @@ const TodoItem = ({ todo, updateTodo, deleteTodo, onEdit }: TodoItemProps) => {
             </Box>
           )}
         </CardContent>
-        <CardActions sx={{ display: 'flex', alignItems: 'center' }}>
-          <IconButton onClick={handleEdit} color="secondary">
-            <EditIcon />
-          </IconButton>
-        </CardActions>
+        {!isBulkDeleteMode && (
+          <CardActions sx={{ display: 'flex', alignItems: 'center' }}>
+            <IconButton onClick={handleEdit} color="secondary">
+              <EditIcon />
+            </IconButton>
+          </CardActions>
+        )}
       </Card>
       <TodoModal
         open={isEditing}
