@@ -1,6 +1,7 @@
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
 import TodoList from './TodoList';
+import type Todo from '../../types/todo';
 
 export default {
   title: 'Components/TodoList',
@@ -8,6 +9,11 @@ export default {
 } as Meta<typeof TodoList>;
 
 const Template: StoryFn<typeof TodoList> = (args) => <TodoList {...args} />;
+
+const commonHandlers = {
+  updateTodo: async (todo: Todo) => console.log('Update Todo:', todo),
+  deleteTodo: async (id: string | number) => console.log('Delete Todo:', id),
+};
 
 export const Default = Template.bind({});
 Default.args = {
@@ -34,6 +40,5 @@ Default.args = {
       selected: false,
     },
   ],
-  updateTodo: (id, updatedFields) => console.log('Update Todo:', id, updatedFields),
-  deleteTodo: (id) => console.log('Delete Todo:', id),
+  ...commonHandlers
 };

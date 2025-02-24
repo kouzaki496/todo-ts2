@@ -24,7 +24,7 @@ const TodoItem = ({ todo, updateTodo, deleteTodo, onEdit, onToggleSelect, isBulk
   const [isEditing, setIsEditing] = useState(false);
 
   const toggleStatus = () => {
-    updateTodo(todo.id, { completed: !todo.completed });
+    updateTodo({ ...todo, completed: !todo.completed });
   };
 
   const handleEdit = () => {
@@ -32,7 +32,13 @@ const TodoItem = ({ todo, updateTodo, deleteTodo, onEdit, onToggleSelect, isBulk
   };
 
   const handleSave = (updatedTitle: string, updatedDueDate: string, updatedDetails: string, updatedCompleted: boolean) => {
-    updateTodo(todo.id, { title: updatedTitle, dueDate: updatedDueDate, details: updatedDetails, completed: updatedCompleted });
+    updateTodo({
+      ...todo,
+      title: updatedTitle,
+      dueDate: updatedDueDate,
+      details: updatedDetails,
+      completed: updatedCompleted
+    });
     setIsEditing(false);
   };
 
@@ -46,7 +52,7 @@ const TodoItem = ({ todo, updateTodo, deleteTodo, onEdit, onToggleSelect, isBulk
       <Card
         variant="outlined"
         onClick={(e) => {
-          if (!isBulkDeleteMode) {
+          if (!isBulkDeleteMode && onEdit) {
             onEdit(todo);
           }
         }}

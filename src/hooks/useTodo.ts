@@ -12,8 +12,9 @@ export const useTodo = () => {
       title,
       completed:false,
       dueDate,
+      selected: false,
     }
-    setTodos([...todos, newTodo]);
+    setTodos(prevTodos => [...prevTodos, newTodo]);
   };
 
   //Todoを削除する
