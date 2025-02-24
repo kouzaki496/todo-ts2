@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Button, Box, FormControlLabel, Checkbox } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Box, FormControlLabel, Checkbox } from '@mui/material';
+import Button from '../Button/Button';  // カスタムButtonをインポート
+import DeleteIcon from '@mui/icons-material/Delete';
 import Todo from '../../types/todo';
 
 interface TodoModalProps {
@@ -84,15 +86,37 @@ const TodoModal: React.FC<TodoModalProps> = ({ open, todo, onClose, onSave, onDe
             control={
               <Checkbox
                 checked={editedCompleted}
-                onChange={(e) => setEditedCompleted(e.target.checked)}
-                color="primary"
+                onChange={(e) => {
+                  e.stopPropagation();  // イベントの伝播を停止
+                  setEditedCompleted(e.target.checked);
+                }}
               />
             }
             label="完了"
+            onChange={(e) => {  // onClickの代わりにonChangeを使用
+              setEditedCompleted(!editedCompleted);
+            }}
+            sx={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              margin: 0,
+              width: 'fit-content',
+              '& .MuiButtonBase-root': {
+                padding: 1,
+              },
+              '& .MuiFormControlLabel-label': {
+                padding: '4px 8px',
+                cursor: 'pointer',
+              },
+              '& > span': {
+                margin: 0,
+                padding: 0,
+              }
+            }}
           />
         </Box>
       </DialogContent>
-      <DialogActions>
+      <DialogActions sx={{ padding: 2, gap: 1 }}>
         {todo && onDelete && (
           <Button
             onClick={() => {
@@ -100,17 +124,32 @@ const TodoModal: React.FC<TodoModalProps> = ({ open, todo, onClose, onSave, onDe
               onClose();
             }}
             color="error"
-            sx={{ mr: 'auto' }}
-          >
-            削除
-          </Button>
+            variant="contained"
+            icon={<DeleteIcon />}
+            label="削除"
+            sx={{
+              mr: 'auto',
+            }}
+          />
         )}
-        <Button onClick={onClose} color="secondary">
-          キャンセル
-        </Button>
-        <Button onClick={handleSave} color="primary">
-          保存
-        </Button>
+        <Button
+          onClick={onClose}
+          color="secondary"
+          variant="outlined"
+          label="キャンセル"
+          sx={{
+            minWidth: 100,
+          }}
+        />
+        <Button
+          onClick={handleSave}
+          color="primary"
+          variant="contained"
+          label="保存"
+          sx={{
+            minWidth: 100,
+          }}
+        />
       </DialogActions>
     </Dialog>
   );
