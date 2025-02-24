@@ -53,15 +53,22 @@ export const useTodoRepository = () => {
       // ドキュメントが存在するか確認
       const docSnap = await getDoc(todoRef);
 
+      // Todoオブジェクトをプレーンなデータに変換
+      const todoData = {
+        title: updatedTodo.title,
+        completed: updatedTodo.completed,
+        dueDate: updatedTodo.dueDate,
+        details: updatedTodo.details,
+        selected: updatedTodo.selected,
+      };
+
       if (!docSnap.exists()) {
-        // ドキュメントが存在しない場合は新規作成
-        await setDoc(todoRef, updatedTodo);
+        await setDoc(todoRef, todoData);
       } else {
-        // 存在する場合は更新
-        await updateDoc(todoRef, updatedTodo);
+        await updateDoc(todoRef, todoData);
       }
 
-      // ローカルのステートも更新
+      // ローカルのステートを更新
       setTodos(prevTodos =>
         prevTodos.map(todo =>
           todo.id === updatedTodo.id ? updatedTodo : todo
