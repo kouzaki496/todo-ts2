@@ -60,7 +60,7 @@ const Header = ({ title, subtitle }: HeaderProps) => {
     <>
       <CssBaseline />
       <AppBar position="fixed" sx={{ backgroundColor: theme.palette.primary.dark }}>
-        <Toolbar sx={{ width: '100%' }}>
+        <Toolbar className="MuiToolbar-header" sx={{ width: '100%' }}>
           {isMobile ? (
             <MenuIcon />
           ) : (

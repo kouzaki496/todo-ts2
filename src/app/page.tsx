@@ -136,7 +136,7 @@ const Page: React.FC = () => {
   return (
     <Container maxWidth="lg">
       <Header title="My Todo App" />
-      <Box sx={{ mt: 4, mb: 4 }}>
+      <Box>
         <Typography variant="h4" component="h1" gutterBottom>
           Todo List
         </Typography>

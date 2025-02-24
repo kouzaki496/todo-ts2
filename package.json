@@ -18,7 +18,8 @@
     "@firebasegen/default-connector": "file:dataconnect-generated/js/default-connector",
     "@mui/icons-material": "^6.4.4",
     "@mui/material": "^6.4.4",
-    "firebase": "^10.8.0",
+    "@mui/material-nextjs": "^6.4.3",
+    "firebase": "^10.14.1",
     "next": "15.1.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
