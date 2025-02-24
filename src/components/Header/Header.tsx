@@ -87,7 +87,16 @@ const Header = ({ title, subtitle }: HeaderProps) => {
               />
             </>
           ) : (
-            <Button color="primary" sx={{ color: theme.palette.common.white }} onClick={handleSignIn}>
+            <Button
+              sx={{
+                backgroundColor: theme.palette.secondary.main,
+                color: theme.palette.secondary.contrastText,
+                '&:hover': {
+                  backgroundColor: theme.palette.secondary.dark,
+                },
+              }}
+              onClick={handleSignIn}
+            >
               Sign In
             </Button>
           )}
