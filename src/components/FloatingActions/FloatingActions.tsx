@@ -70,23 +70,35 @@ export const FloatingActions: React.FC<FloatingActionsProps> = ({
         <SpeedDialAction
           icon={<SelectAllIcon />}
           tooltipTitle="すべて選択"
-          onClick={onSelectAll}
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelectAll?.();
+          }}
         />
         <SpeedDialAction
           icon={<CheckCircleIcon />}
           tooltipTitle="完了済みを選択"
-          onClick={onSelectCompleted}
+          onClick={(e) => {
+            e.stopPropagation();
+            onSelectCompleted?.();
+          }}
         />
         <SpeedDialAction
           icon={<ClearIcon />}
           tooltipTitle="選択解除"
-          onClick={onClearSelection}
+          onClick={(e) => {
+            e.stopPropagation();
+            onClearSelection?.();
+          }}
         />
         {selectedCount > 0 && (
           <SpeedDialAction
             icon={<DeleteSweepIcon />}
             tooltipTitle={`${selectedCount}件を削除`}
-            onClick={onBulkDelete}
+            onClick={(e) => {
+              e.stopPropagation();
+              onBulkDelete?.();
+            }}
           />
         )}
       </SpeedDial>
