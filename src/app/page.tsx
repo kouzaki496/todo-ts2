@@ -10,7 +10,6 @@ import AddTodoButton from '../components/AddTodoButton/AddTodoButton';
 import TodoModal from '../components/Modals/TodoModal';
 import Todo from '../types/todo';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
-import { BulkActionBar } from '../components/TodoList/BulkActionBar';
 import { FloatingActions } from '../components/FloatingActions/FloatingActions';
 import { useTodoRepository } from '../hooks/useTodoRepository';
 import { useTheme } from '@mui/material/styles';
@@ -136,24 +135,12 @@ const Page: React.FC = () => {
   return (
     <Container maxWidth="lg">
       <Header title="My Todo App" />
-      <Box sx={{
-        display: 'flex',
-        gap: 2,
-      }}>
+      <Box sx={{ display: 'flex', gap: 2 }}>
         {isDesktop && <Sidebar disabled={isBulkDeleteMode} />}
         <Box sx={{ flex: 1 }}>
           <Typography variant="h4" component="h1" gutterBottom>
             Todo List
           </Typography>
-          <BulkActionBar
-            isBulkDeleteMode={isBulkDeleteMode}
-            onToggleBulkDeleteMode={handleToggleBulkDeleteMode}
-            onSelectAll={handleSelectAll}
-            onSelectCompleted={handleSelectCompleted}
-            onClearSelection={handleClearSelection}
-            onBulkDelete={handleBulkDelete}
-            selectedCount={selectedCount}
-          />
           <TodoList
             todos={todos}
             updateTodo={updateTodo}
@@ -164,7 +151,14 @@ const Page: React.FC = () => {
           />
           <FloatingActions
             onAddClick={() => setIsModalOpen(true)}
+            onBulkDeleteClick={handleToggleBulkDeleteMode}
+            onSelectAll={handleSelectAll}
+            onSelectCompleted={handleSelectCompleted}
+            onClearSelection={handleClearSelection}
+            onBulkDelete={handleBulkDelete}
             disabled={isBulkDeleteMode}
+            isBulkDeleteMode={isBulkDeleteMode}
+            selectedCount={selectedCount}
           />
           <TodoModal
             open={isModalOpen && !isBulkDeleteMode}

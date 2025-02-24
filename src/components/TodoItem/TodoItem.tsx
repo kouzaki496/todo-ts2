@@ -27,19 +27,19 @@ const TodoItem = ({ todo, updateTodo, deleteTodo, onEdit, onToggleSelect, isBulk
     updateTodo({ ...todo, completed: !todo.completed });
   };
 
-  const handleEdit = () => {
-    setIsEditing(true);
-  };
-
-  const handleSave = (updatedTitle: string, updatedDueDate: string, updatedDetails: string, updatedCompleted: boolean) => {
-    updateTodo({
-      ...todo,
-      title: updatedTitle,
-      dueDate: updatedDueDate,
-      details: updatedDetails,
-      completed: updatedCompleted
-    });
-    setIsEditing(false);
+  const handleSave = async (updatedTitle: string, updatedDueDate: string, updatedDetails: string, updatedCompleted: boolean) => {
+    try {
+      await updateTodo({
+        ...todo,
+        title: updatedTitle,
+        dueDate: updatedDueDate,
+        details: updatedDetails,
+        completed: updatedCompleted
+      });
+      setIsEditing(false);  // 保存完了後にモーダルを閉じる
+    } catch (error) {
+      console.error('Error saving todo:', error);
+    }
   };
 
   // 期限が過ぎているかどうかをチェック
@@ -52,8 +52,8 @@ const TodoItem = ({ todo, updateTodo, deleteTodo, onEdit, onToggleSelect, isBulk
       <Card
         variant="outlined"
         onClick={(e) => {
-          if (!isBulkDeleteMode && onEdit) {
-            onEdit(todo);
+          if (!isBulkDeleteMode) {
+            setIsEditing(true);
           }
         }}
         sx={{
@@ -110,7 +110,13 @@ const TodoItem = ({ todo, updateTodo, deleteTodo, onEdit, onToggleSelect, isBulk
         </CardContent>
         {!isBulkDeleteMode && (
           <CardActions sx={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton onClick={handleEdit} color="secondary">
+            <IconButton
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsEditing(true);
+              }}
+              color="secondary"
+            >
               <EditIcon />
             </IconButton>
           </CardActions>
