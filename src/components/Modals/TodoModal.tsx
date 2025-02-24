@@ -7,28 +7,30 @@ interface TodoModalProps {
   todo: Todo | null;
   onClose: () => void;
   onSave: (updatedTitle: string, updatedDueDate: string, updatedDetails: string, updatedCompleted: boolean) => void;
-  onDelete?: (id: number) => void;
+  onDelete?: (id: string | number) => void;
 }
 
 const TodoModal: React.FC<TodoModalProps> = ({ open, todo, onClose, onSave, onDelete }) => {
-  const [editedTitle, setEditedTitle] = useState(todo?.title || '');
-  const [editedDueDate, setEditedDueDate] = useState(todo?.dueDate || new Date().toISOString().split('T')[0]);
-  const [editedDetails, setEditedDetails] = useState(todo?.details || '');
-  const [editedCompleted, setEditedCompleted] = useState(todo?.completed || false);
+  const [editedTitle, setEditedTitle] = useState('');
+  const [editedDueDate, setEditedDueDate] = useState(new Date().toISOString().split('T')[0]);
+  const [editedDetails, setEditedDetails] = useState('');
+  const [editedCompleted, setEditedCompleted] = useState(false);
 
   useEffect(() => {
-    if (todo) {
-      setEditedTitle(todo.title);
-      setEditedDueDate(todo.dueDate);
-      setEditedDetails(todo.details || '');
-      setEditedCompleted(todo.completed);
-    } else {
-      setEditedTitle('');
-      setEditedDueDate(new Date().toISOString().split('T')[0]);
-      setEditedDetails('');
-      setEditedCompleted(false);
+    if (open) {  // openの時のみ更新
+      if (todo) {
+        setEditedTitle(todo.title);
+        setEditedDueDate(todo.dueDate);
+        setEditedDetails(todo.details || '');
+        setEditedCompleted(todo.completed);
+      } else {
+        setEditedTitle('');
+        setEditedDueDate(new Date().toISOString().split('T')[0]);
+        setEditedDetails('');
+        setEditedCompleted(false);
+      }
     }
-  }, [todo]);
+  }, [todo, open]);
 
   const handleSave = () => {
     if (!editedTitle.trim()) {

@@ -4,7 +4,7 @@ import React from 'react';
 import { Button as MuiButton, ButtonProps as MuiButtonProps } from '@mui/material';
 import { SvgIconProps } from '@mui/material/SvgIcon';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { auth } from '../../firebaseConfig';
+import { auth } from '../../service/firebaseConfig';
 
 export interface ButtonProps extends MuiButtonProps {
   label?: string;

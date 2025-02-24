@@ -12,6 +12,7 @@ import Todo from '../types/todo';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import { BulkActionBar } from '../components/TodoList/BulkActionBar';
 import { FloatingActions } from '../components/FloatingActions/FloatingActions';
+import { useTodoRepository } from '../hooks/useTodoRepository';
 
 const initialTodos: Todo[] = [
   {
@@ -41,44 +42,36 @@ const initialTodos: Todo[] = [
 ];
 
 const Page: React.FC = () => {
-  const { addTodo } = useTodo();
-  const [localTodos, setLocalTodos] = useState<Todo[]>(initialTodos);
+  const { todos, loading, addTodo, updateTodo, deleteTodo } = useTodoRepository();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
   const [isBulkDeleteMode, setIsBulkDeleteMode] = useState(false);
 
-  const handleUpdateTodo = (id: number, updatedFields: Partial<Todo>) => {
-    setLocalTodos((prevTodos) =>
-      prevTodos.map((todo) =>
-        todo.id === id ? { ...todo, ...updatedFields } : todo
-      )
-    );
-  };
-
-  const handleDeleteTodo = (id: number) => {
-    setLocalTodos((prevTodos) => prevTodos.filter((todo) => todo.id !== id));
-  };
-
-  const handleAddTodo = (title: string, dueDate: string, details: string, completed: boolean) => {
-    const newTodo: Todo = {
-      id: Math.max(...localTodos.map(todo => todo.id), 0) + 1,
-      title,
-      completed,
-      dueDate,
-      details,
-      selected: false,
-    };
-    setLocalTodos((prevTodos) => [...prevTodos, newTodo]);
-  };
-
-  const handleSaveTodo = (title: string, dueDate: string, details: string, completed: boolean) => {
-    if (selectedTodo) {
-      handleUpdateTodo(selectedTodo.id, { title, dueDate, details, completed });
-    } else {
-      handleAddTodo(title, dueDate, details, completed);
+  const handleSaveTodo = async (title: string, dueDate: string, details: string, completed: boolean) => {
+    try {
+      if (selectedTodo) {
+        await updateTodo({
+          ...selectedTodo,
+          title,
+          dueDate,
+          details,
+          completed
+        });
+      } else {
+        await addTodo({
+          title,
+          dueDate,
+          details,
+          completed,
+          selected: false
+        });
+      }
+      setIsModalOpen(false);
+      setSelectedTodo(null);
+    } catch (error) {
+      console.error('Error saving todo:', error);
+      alert('タスクの保存に失敗しました。');
     }
-    setIsModalOpen(false);
-    setSelectedTodo(null);
   };
 
   const handleEditTodo = (todo: Todo) => {
@@ -86,53 +79,54 @@ const Page: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  const handleBulkDelete = () => {
-    const selectedTodos = localTodos.filter(todo => todo.selected);
+  const handleToggleSelect = async (id: string | number) => {
+    const todo = todos.find(t => t.id === id);
+    if (todo) {
+      await updateTodo({ ...todo, selected: !todo.selected });
+    }
+  };
+
+  const handleBulkDelete = async () => {
+    const selectedTodos = todos.filter(todo => todo.selected);
     if (selectedTodos.length === 0) {
       alert('削除するタスクが選択されていません。');
       return;
     }
     if (window.confirm(`${selectedTodos.length}件のタスクを削除しますか？`)) {
-      setLocalTodos(prevTodos => prevTodos.filter(todo => !todo.selected));
+      await Promise.all(selectedTodos.map(todo => deleteTodo(todo.id)));
     }
-  };
-
-  const handleToggleSelect = (id: number) => {
-    setLocalTodos(prevTodos =>
-      prevTodos.map(todo =>
-        todo.id === id ? { ...todo, selected: !todo.selected } : todo
-      )
-    );
   };
 
   const handleToggleBulkDeleteMode = () => {
     setIsBulkDeleteMode(!isBulkDeleteMode);
     if (isBulkDeleteMode) {
-      setLocalTodos(prevTodos =>
-        prevTodos.map(todo => ({ ...todo, selected: false }))
-      );
+      todos.forEach(async (todo) => {
+        await updateTodo({ ...todo, selected: false });
+      });
     }
   };
 
-  const handleSelectAll = () => {
-    setLocalTodos(prevTodos =>
-      prevTodos.map(todo => ({ ...todo, selected: true }))
-    );
+  const handleSelectAll = async () => {
+    await Promise.all(todos.map(todo => updateTodo({ ...todo, selected: true })));
   };
 
-  const handleSelectCompleted = () => {
-    setLocalTodos(prevTodos =>
-      prevTodos.map(todo => ({ ...todo, selected: todo.completed }))
-    );
+  const handleSelectCompleted = async () => {
+    await Promise.all(todos.map(todo =>
+      updateTodo({ ...todo, selected: todo.completed })
+    ));
   };
 
-  const handleClearSelection = () => {
-    setLocalTodos(prevTodos =>
-      prevTodos.map(todo => ({ ...todo, selected: false }))
-    );
+  const handleClearSelection = async () => {
+    await Promise.all(todos.map(todo =>
+      updateTodo({ ...todo, selected: false })
+    ));
   };
 
-  const selectedCount = localTodos.filter(todo => todo.selected).length;
+  const selectedCount = todos.filter(todo => todo.selected).length;
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Container maxWidth="lg">
@@ -151,10 +145,10 @@ const Page: React.FC = () => {
           selectedCount={selectedCount}
         />
         <TodoList
-          todos={localTodos}
-          updateTodo={handleUpdateTodo}
+          todos={todos}
+          updateTodo={updateTodo}
           onEdit={handleEditTodo}
-          deleteTodo={handleDeleteTodo}
+          deleteTodo={deleteTodo}
           onToggleSelect={handleToggleSelect}
           isBulkDeleteMode={isBulkDeleteMode}
         />
@@ -167,7 +161,7 @@ const Page: React.FC = () => {
             setSelectedTodo(null);
           }}
           onSave={handleSaveTodo}
-          onDelete={handleDeleteTodo}
+          onDelete={deleteTodo}
         />
       </Box>
     </Container>
