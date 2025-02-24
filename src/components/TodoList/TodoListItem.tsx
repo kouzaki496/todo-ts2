@@ -39,8 +39,8 @@ export const TodoListItem: React.FC<TodoListItemProps> = ({
     )}
     <Box sx={{
       flex: 1,
-      opacity: isBulkDeleteMode && isSelected ? 0.8 : 1,
-      transition: 'opacity 0.2s ease',
+      opacity: isBulkDeleteMode ? 0.7 : 1,
+      pointerEvents: isBulkDeleteMode ? 'none' : 'auto',
     }}>
       {children}
     </Box>

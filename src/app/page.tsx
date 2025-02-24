@@ -13,6 +13,9 @@ import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import { BulkActionBar } from '../components/TodoList/BulkActionBar';
 import { FloatingActions } from '../components/FloatingActions/FloatingActions';
 import { useTodoRepository } from '../hooks/useTodoRepository';
+import { useTheme } from '@mui/material/styles';
+import { useMediaQuery } from '@mui/material';
+import { Sidebar } from '../components/Navigation/Sidebar';
 
 const initialTodos: Todo[] = [
   {
@@ -46,6 +49,8 @@ const Page: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
   const [isBulkDeleteMode, setIsBulkDeleteMode] = useState(false);
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
   const handleSaveTodo = async (title: string, dueDate: string, details: string, completed: boolean) => {
     try {
@@ -131,38 +136,47 @@ const Page: React.FC = () => {
   return (
     <Container maxWidth="lg">
       <Header title="My Todo App" />
-      <Box>
-        <Typography variant="h4" component="h1" gutterBottom>
-          Todo List
-        </Typography>
-        <BulkActionBar
-          isBulkDeleteMode={isBulkDeleteMode}
-          onToggleBulkDeleteMode={handleToggleBulkDeleteMode}
-          onSelectAll={handleSelectAll}
-          onSelectCompleted={handleSelectCompleted}
-          onClearSelection={handleClearSelection}
-          onBulkDelete={handleBulkDelete}
-          selectedCount={selectedCount}
-        />
-        <TodoList
-          todos={todos}
-          updateTodo={updateTodo}
-          onEdit={handleEditTodo}
-          deleteTodo={deleteTodo}
-          onToggleSelect={handleToggleSelect}
-          isBulkDeleteMode={isBulkDeleteMode}
-        />
-        <FloatingActions onAddClick={() => setIsModalOpen(true)} />
-        <TodoModal
-          open={isModalOpen}
-          todo={selectedTodo}
-          onClose={() => {
-            setIsModalOpen(false);
-            setSelectedTodo(null);
-          }}
-          onSave={handleSaveTodo}
-          onDelete={deleteTodo}
-        />
+      <Box sx={{
+        display: 'flex',
+        gap: 2,
+      }}>
+        {isDesktop && <Sidebar disabled={isBulkDeleteMode} />}
+        <Box sx={{ flex: 1 }}>
+          <Typography variant="h4" component="h1" gutterBottom>
+            Todo List
+          </Typography>
+          <BulkActionBar
+            isBulkDeleteMode={isBulkDeleteMode}
+            onToggleBulkDeleteMode={handleToggleBulkDeleteMode}
+            onSelectAll={handleSelectAll}
+            onSelectCompleted={handleSelectCompleted}
+            onClearSelection={handleClearSelection}
+            onBulkDelete={handleBulkDelete}
+            selectedCount={selectedCount}
+          />
+          <TodoList
+            todos={todos}
+            updateTodo={updateTodo}
+            onEdit={isBulkDeleteMode ? undefined : handleEditTodo}
+            deleteTodo={isBulkDeleteMode ? undefined : deleteTodo}
+            onToggleSelect={handleToggleSelect}
+            isBulkDeleteMode={isBulkDeleteMode}
+          />
+          <FloatingActions
+            onAddClick={() => setIsModalOpen(true)}
+            disabled={isBulkDeleteMode}
+          />
+          <TodoModal
+            open={isModalOpen && !isBulkDeleteMode}
+            todo={selectedTodo}
+            onClose={() => {
+              setIsModalOpen(false);
+              setSelectedTodo(null);
+            }}
+            onSave={handleSaveTodo}
+            onDelete={deleteTodo}
+          />
+        </Box>
       </Box>
     </Container>
   );

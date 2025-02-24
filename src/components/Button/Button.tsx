@@ -10,9 +10,10 @@ export interface ButtonProps extends MuiButtonProps {
   label?: string;
   icon?: React.ReactElement<SvgIconProps>;
   children?: React.ReactNode;
+  disabled?: boolean;
 }
 
-const Button = ({ label, icon, children, ...props }: ButtonProps) => {
+const Button = ({ label, icon, children, disabled, ...props }: ButtonProps) => {
   const handleGoogleSignIn = async () => {
     const provider = new GoogleAuthProvider();
     try {
@@ -28,6 +29,7 @@ const Button = ({ label, icon, children, ...props }: ButtonProps) => {
   return (
     <MuiButton
       {...props}
+      disabled={disabled}
       sx={{
         display: 'flex',
         alignItems: 'center',
@@ -36,6 +38,7 @@ const Button = ({ label, icon, children, ...props }: ButtonProps) => {
         paddingLeft: 1,
         paddingRight: 1,
         borderRadius: 2,
+        opacity: disabled ? 0.6 : 1,
         ...props.sx,
       }}
       onClick={handleGoogleSignIn}

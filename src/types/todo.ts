@@ -13,8 +13,8 @@ export interface Todo {
 export interface TodoItemProps {
   todo: Todo;
   updateTodo: (todo: Todo) => Promise<void>;
-  deleteTodo: (id: string | number) => Promise<void>;
-  onEdit: (todo: Todo) => void;
+  deleteTodo?: (id: string | number) => Promise<void>;
+  onEdit?: (todo: Todo) => void;
   onToggleSelect: (id: string | number) => void;
   isBulkDeleteMode: boolean;
 }
@@ -22,8 +22,8 @@ export interface TodoItemProps {
 export interface TodoListProps {
   todos: Todo[];
   updateTodo: (todo: Todo) => Promise<void>;
-  onEdit: (todo: Todo) => void;
-  deleteTodo: (id: string | number) => Promise<void>;
+  onEdit?: (todo: Todo) => void;
+  deleteTodo?: (id: string | number) => Promise<void>;
   onToggleSelect: (id: string | number) => void;
   isBulkDeleteMode: boolean;
 }

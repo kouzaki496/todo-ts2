@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Box, useTheme, useMediaQuery } from '@mui/material';
 import { Sidebar } from '../Navigation/Sidebar';
 
@@ -25,7 +25,6 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         },
       },
     }}>
-      {isDesktop && <Sidebar />}
       <Box
         component="main"
         sx={{

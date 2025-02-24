@@ -20,9 +20,10 @@ const HEADER_HEIGHT = 64; // ヘッダーの高さ
 
 interface SidebarProps {
   selectedCount?: number;
+  disabled?: boolean;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ selectedCount = 0 }) => {
+export const Sidebar: React.FC<SidebarProps> = ({ selectedCount = 0, disabled }) => {
   const theme = useTheme();
 
   return (
@@ -31,6 +32,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedCount = 0 }) => {
       sx={{
         width: DRAWER_WIDTH,
         flexShrink: 0,
+        pointerEvents: disabled ? 'none' : 'auto',
         '& .MuiDrawer-paper': {
           width: DRAWER_WIDTH,
           boxSizing: 'border-box',
@@ -38,6 +40,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedCount = 0 }) => {
           bgcolor: 'background.paper',
           top: HEADER_HEIGHT,
           height: `calc(100% - ${HEADER_HEIGHT}px)`,
+          opacity: disabled ? 0.3 : 1,
         },
         '& .MuiToolbar-root': {
           display: 'none',
@@ -47,7 +50,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedCount = 0 }) => {
       <Box sx={{ overflow: 'auto' }}>
         <List>
           <ListItem disablePadding>
-            <ListItemButton selected>
+            <ListItemButton
+              selected
+              disabled={disabled}
+              sx={{ cursor: disabled ? 'not-allowed' : 'pointer' }}
+            >
               <ListItemIcon>
                 <FormatListBulletedIcon />
               </ListItemIcon>
@@ -55,7 +62,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedCount = 0 }) => {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton disabled={disabled}>
               <ListItemIcon>
                 <StarIcon />
               </ListItemIcon>
@@ -66,7 +73,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedCount = 0 }) => {
         <Divider />
         <List>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton disabled={disabled}>
               <ListItemIcon>
                 <AccessTimeIcon />
               </ListItemIcon>
@@ -74,7 +81,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedCount = 0 }) => {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton disabled={disabled}>
               <ListItemIcon>
                 <CheckCircleIcon />
               </ListItemIcon>

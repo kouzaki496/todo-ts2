@@ -12,6 +12,7 @@ const meta: Meta<typeof Button> = {
     label: { control: 'text' },
     color: { control: 'select', options: ['default', 'primary', 'secondary'] },
     variant: { control: 'select', options: ['text', 'outlined', 'contained'] },
+    disabled: { control: 'boolean' },
     icon: {
       control: { type: 'boolean' },
       mapping: { true: <AddIcon />, false: null },
@@ -35,5 +36,24 @@ export const Secondary: StoryObj<typeof meta> = {
     label: 'Secondary Button',
     color: 'secondary',
     variant: 'contained',
+  },
+};
+
+export const Disabled: StoryObj<typeof meta> = {
+  args: {
+    label: 'Disabled Button',
+    color: 'primary',
+    variant: 'contained',
+    disabled: true,
+  },
+};
+
+export const DisabledWithIcon: StoryObj<typeof meta> = {
+  args: {
+    label: 'Disabled Button',
+    color: 'primary',
+    variant: 'contained',
+    disabled: true,
+    icon: <AddIcon />,
   },
 };
