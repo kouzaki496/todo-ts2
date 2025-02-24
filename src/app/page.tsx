@@ -10,6 +10,7 @@ import AddTodoButton from '../components/AddTodoButton/AddTodoButton';
 import TodoModal from '../components/Modals/TodoModal';
 import Todo from '../types/todo';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
+import { BulkActionBar } from '../components/TodoList/BulkActionBar';
 
 const initialTodos: Todo[] = [
   {
@@ -112,6 +113,26 @@ const Page: React.FC = () => {
     }
   };
 
+  const handleSelectAll = () => {
+    setLocalTodos(prevTodos =>
+      prevTodos.map(todo => ({ ...todo, selected: true }))
+    );
+  };
+
+  const handleSelectCompleted = () => {
+    setLocalTodos(prevTodos =>
+      prevTodos.map(todo => ({ ...todo, selected: todo.completed }))
+    );
+  };
+
+  const handleClearSelection = () => {
+    setLocalTodos(prevTodos =>
+      prevTodos.map(todo => ({ ...todo, selected: false }))
+    );
+  };
+
+  const selectedCount = localTodos.filter(todo => todo.selected).length;
+
   return (
     <Container maxWidth="lg">
       <Header title="My Todo App" />
@@ -119,25 +140,15 @@ const Page: React.FC = () => {
         <Typography variant="h4" component="h1" gutterBottom>
           Todo List
         </Typography>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-          <Button
-            variant={isBulkDeleteMode ? "contained" : "outlined"}
-            color={isBulkDeleteMode ? "error" : "primary"}
-            onClick={handleToggleBulkDeleteMode}
-            startIcon={<DeleteSweepIcon />}
-          >
-            {isBulkDeleteMode ? '一括削除モードを終了' : '一括削除モードを開始'}
-          </Button>
-          {isBulkDeleteMode && (
-            <Button
-              variant="contained"
-              color="error"
-              onClick={handleBulkDelete}
-            >
-              選択したタスクを削除
-            </Button>
-          )}
-        </Box>
+        <BulkActionBar
+          isBulkDeleteMode={isBulkDeleteMode}
+          onToggleBulkDeleteMode={handleToggleBulkDeleteMode}
+          onSelectAll={handleSelectAll}
+          onSelectCompleted={handleSelectCompleted}
+          onClearSelection={handleClearSelection}
+          onBulkDelete={handleBulkDelete}
+          selectedCount={selectedCount}
+        />
         <TodoList
           todos={localTodos}
           updateTodo={handleUpdateTodo}
