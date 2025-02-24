@@ -1,7 +1,7 @@
 //src/components/Header/Header.tsx
 import React, { useState, useEffect } from 'react';
 import { AppBar, Toolbar, Typography, CssBaseline, useMediaQuery, useTheme, Avatar, IconButton } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import Button from '../Button/Button';
 import MenuList from '../MenuList/MenuList';
 import { signInWithGoogle } from '../../service/authService';
@@ -60,22 +60,16 @@ const Header = ({ title, subtitle }: HeaderProps) => {
     <>
       <CssBaseline />
       <AppBar position="fixed" sx={{ backgroundColor: theme.palette.primary.dark }}>
-        <Toolbar className="MuiToolbar-header" sx={{ width: '100%' }}>
-          {isMobile ? (
-            <MenuIcon />
-          ) : (
-            <Typography variant="h4" component="h1" style={{ flexGrow: 1 }}>
-              {title}
-            </Typography>
-          )}
+        <Toolbar className="MuiToolbar-header" sx={{ width: '100%', justifyContent: 'flex-end' }}>
+          <TaskAltIcon sx={{ marginRight: 1 }} />
+          <Typography variant="h4" component="h1" style={{ flexGrow: 1 }}>
+            {title}
+          </Typography>
           {subtitle && !isMobile && (
             <Typography variant="subtitle1" style={{ flexGrow: 1 }}>
               {subtitle}
             </Typography>
           )}
-          <Button color="primary" sx={{ color: theme.palette.common.white }}>Home</Button>
-          <Button color="primary" sx={{ color: theme.palette.common.white }}>About</Button>
-          <Button color="primary" sx={{ color: theme.palette.common.white }}>Contact</Button>
           {user ? (
             <>
               <IconButton sx={{ p: 0 }} onClick={handleAvatarClick}>
