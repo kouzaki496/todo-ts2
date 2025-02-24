@@ -3,6 +3,8 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../config/firebaseConfig';
 import { TodoRepository } from '../repositories/TodoRepository';
 import Todo from '../types/todo';
+import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { db } from '../config/firebaseConfig';
 
 export const useTodoRepository = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -44,10 +46,27 @@ export const useTodoRepository = () => {
     }
   };
 
-  const updateTodo = async (todo: Todo) => {
+  const updateTodo = async (updatedTodo: Todo) => {
     try {
-      await TodoRepository.updateTodo(todo, userId);
-      setTodos(prev => prev.map(t => t.id === todo.id ? todo : t));
+      const todoRef = doc(db, 'todos', updatedTodo.id.toString());
+
+      // ドキュメントが存在するか確認
+      const docSnap = await getDoc(todoRef);
+
+      if (!docSnap.exists()) {
+        // ドキュメントが存在しない場合は新規作成
+        await setDoc(todoRef, updatedTodo);
+      } else {
+        // 存在する場合は更新
+        await updateDoc(todoRef, updatedTodo);
+      }
+
+      // ローカルのステートも更新
+      setTodos(prevTodos =>
+        prevTodos.map(todo =>
+          todo.id === updatedTodo.id ? updatedTodo : todo
+        )
+      );
     } catch (error) {
       console.error('Error updating todo:', error);
       throw error;

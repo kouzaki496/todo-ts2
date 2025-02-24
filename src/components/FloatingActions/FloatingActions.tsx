@@ -51,7 +51,6 @@ export const FloatingActions: React.FC<FloatingActionsProps> = ({
           color: "primary",
           sx: {
             bgcolor: 'primary.main',
-            opacity: isBulkDeleteMode ? 1 : 0.7,
             '&:hover': {
               opacity: isBulkDeleteMode ? 1 : 1
             }

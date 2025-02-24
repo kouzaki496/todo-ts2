@@ -134,7 +134,7 @@ const TodoModal: React.FC<TodoModalProps> = ({ open, todo, onClose, onSave, onDe
         )}
         <Button
           onClick={onClose}
-          color="secondary"
+          color="primary"
           variant="outlined"
           label="キャンセル"
           sx={{
