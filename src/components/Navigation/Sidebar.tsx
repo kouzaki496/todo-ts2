@@ -14,9 +14,7 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import StarIcon from '@mui/icons-material/Star';
-
-const DRAWER_WIDTH = 240;
-const HEADER_HEIGHT = 64; // ヘッダーの高さ
+import { LAYOUT } from '../../constants/layout';
 
 interface SidebarProps {
   selectedCount?: number;
@@ -30,16 +28,16 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedCount = 0, disabled })
     <Drawer
       variant="permanent"
       sx={{
-        width: DRAWER_WIDTH,
+        width: LAYOUT.DRAWER_WIDTH,
         flexShrink: 0,
         pointerEvents: disabled ? 'none' : 'auto',
         '& .MuiDrawer-paper': {
-          width: DRAWER_WIDTH,
+          width: LAYOUT.DRAWER_WIDTH,
           boxSizing: 'border-box',
           borderRight: `1px solid ${theme.palette.divider}`,
           bgcolor: 'background.paper',
-          top: HEADER_HEIGHT,
-          height: `calc(100% - ${HEADER_HEIGHT}px)`,
+          top: LAYOUT.HEADER_HEIGHT,
+          height: `calc(100% - ${LAYOUT.HEADER_HEIGHT}px)`,
           opacity: disabled ? 0.3 : 1,
         },
         '& .MuiToolbar-root': {

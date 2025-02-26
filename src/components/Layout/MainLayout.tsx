@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { Box, useTheme, useMediaQuery } from '@mui/material';
 import { Sidebar } from '../Navigation/Sidebar';
-
-const DRAWER_WIDTH = 240;
-const HEADER_HEIGHT = 64; // ヘッダーの高さ
+import { LAYOUT } from '../../constants/layout';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -17,7 +15,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
     <Box sx={{
       display: 'flex',
       minHeight: '100vh',
-      pt: `${HEADER_HEIGHT}px`,
+      pt: `${LAYOUT.HEADER_HEIGHT}px`,
       '& .MuiToolbar-root': {
         display: 'none',
         '&.MuiToolbar-header': {
@@ -30,7 +28,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
         sx={{
           flexGrow: 1,
           paddingTop: { xs: 1, sm: 2, md: 3 },
-          width: { md: `calc(100% - ${DRAWER_WIDTH}px)` },
+          width: { md: `calc(100% - ${LAYOUT.DRAWER_WIDTH}px)` },
           minHeight: '100%',
           maxWidth: '100%',
         }}
