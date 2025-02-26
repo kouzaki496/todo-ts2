@@ -43,6 +43,15 @@ const TodoModal: React.FC<TodoModalProps> = ({ open, todo, onClose, onSave, onDe
     onClose();
   };
 
+  const handleDelete = () => {
+    if (!todo) return;
+
+    if (window.confirm('このタスクを削除してもよろしいですか？')) {
+      onDelete?.(todo.id);
+      onClose();
+    }
+  };
+
   return (
     <Dialog open={open} onClose={onClose} maxWidth="md" fullWidth>
       <DialogTitle>{todo ? 'タスクを編集' : '新しいタスクを追加'}</DialogTitle>
@@ -119,17 +128,12 @@ const TodoModal: React.FC<TodoModalProps> = ({ open, todo, onClose, onSave, onDe
       <DialogActions sx={{ padding: 2, gap: 1 }}>
         {todo && onDelete && (
           <Button
-            onClick={() => {
-              onDelete(todo.id);
-              onClose();
-            }}
+            onClick={handleDelete}
             color="error"
             variant="contained"
             icon={<DeleteIcon />}
             label="削除"
-            sx={{
-              mr: 'auto',
-            }}
+            sx={{ mr: 'auto' }}
           />
         )}
         <Button

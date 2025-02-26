@@ -14,7 +14,6 @@ import { useAuth } from '../../hooks/useAuth';
 export interface HeaderProps {
   title: string;
   subtitle?: string;
-  // 他のプロパティをここに追加
 }
 
 const Header: React.FC<HeaderProps> = memo(({ title, subtitle }) => {
@@ -26,7 +25,6 @@ const Header: React.FC<HeaderProps> = memo(({ title, subtitle }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      // This effect is now empty as the user state is managed by useAuth
     });
     return unsubscribe;
   }, []);
