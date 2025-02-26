@@ -1,5 +1,5 @@
 import { Box } from '@mui/material';
-import { StyledDeleteCheckbox } from '../common/StyledCheckbox';
+import { DeleteCheckBox } from '../../common/CheckBox';
 
 interface TodoListItemProps {
   children: React.ReactNode;
@@ -8,12 +8,12 @@ interface TodoListItemProps {
   onToggleSelect: () => void;
 }
 
-export const TodoListItem: React.FC<TodoListItemProps> = ({
+export const TodoListItem = ({
   children,
   isBulkDeleteMode,
   isSelected,
   onToggleSelect,
-}) => (
+}: TodoListItemProps) => (
   <Box
     sx={{
       display: 'flex',
@@ -26,7 +26,7 @@ export const TodoListItem: React.FC<TodoListItemProps> = ({
     onClick={() => isBulkDeleteMode && onToggleSelect()}
   >
     {isBulkDeleteMode && (
-      <StyledDeleteCheckbox
+      <DeleteCheckBox
         checked={isSelected}
         onChange={() => {}}
         sx={{

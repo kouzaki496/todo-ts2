@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
-import TodoList from './TodoList';
-import type Todo from '../../types/todo';
+import { TodoList } from './TodoList';
+import type Todo from '../../../types/todo';
 
 export default {
   title: 'Components/TodoList',
