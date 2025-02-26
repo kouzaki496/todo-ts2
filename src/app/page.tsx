@@ -2,7 +2,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Box, Container, Typography, Button } from '@mui/material';
+import { Box, Container, Typography, Button, CircularProgress } from '@mui/material';
 import { useTodo } from '../hooks/useTodo';
 import TodoList from '../components/TodoList/TodoList';
 import Header from '../components/Header/Header';
@@ -44,7 +44,7 @@ const initialTodos: Todo[] = [
 ];
 
 const Page: React.FC = () => {
-  const { todos, loading, addTodo, updateTodo, deleteTodo } = useTodoRepository();
+  const { todos, loading, addTodo, updateTodo, deleteTodo, isAuthenticated } = useTodoRepository();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState<Todo | null>(null);
   const [isBulkDeleteMode, setIsBulkDeleteMode] = useState(false);
@@ -128,50 +128,52 @@ const Page: React.FC = () => {
 
   const selectedCount = todos.filter(todo => todo.selected).length;
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
   return (
     <Container maxWidth="lg">
       <Header title="My Todo App" />
-      <Box sx={{ display: 'flex', gap: 2 }}>
-        {isDesktop && <Sidebar disabled={isBulkDeleteMode} />}
-        <Box sx={{ flex: 1 }}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            Todo List
-          </Typography>
-          <TodoList
-            todos={todos}
-            updateTodo={updateTodo}
-            onEdit={isBulkDeleteMode ? undefined : handleEditTodo}
-            deleteTodo={isBulkDeleteMode ? undefined : deleteTodo}
-            onToggleSelect={handleToggleSelect}
-            isBulkDeleteMode={isBulkDeleteMode}
-          />
-          <FloatingActions
-            onAddClick={() => setIsModalOpen(true)}
-            onBulkDeleteClick={handleToggleBulkDeleteMode}
-            onSelectAll={handleSelectAll}
-            onSelectCompleted={handleSelectCompleted}
-            onClearSelection={handleClearSelection}
-            onBulkDelete={handleBulkDelete}
-            disabled={isBulkDeleteMode}
-            isBulkDeleteMode={isBulkDeleteMode}
-            selectedCount={selectedCount}
-          />
-          <TodoModal
-            open={isModalOpen && !isBulkDeleteMode}
-            todo={selectedTodo}
-            onClose={() => {
-              setIsModalOpen(false);
-              setSelectedTodo(null);
-            }}
-            onSave={handleSaveTodo}
-            onDelete={deleteTodo}
-          />
+      {loading ? (
+        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+          <CircularProgress />
         </Box>
-      </Box>
+      ) : (
+        <Box sx={{ display: 'flex', gap: 2 }}>
+          {isDesktop && <Sidebar disabled={isBulkDeleteMode} />}
+          <Box sx={{ flex: 1 }}>
+            <Typography variant="h4" component="h1" gutterBottom>
+              Todo List
+            </Typography>
+            <TodoList
+              todos={todos}
+              updateTodo={updateTodo}
+              onEdit={isBulkDeleteMode ? undefined : handleEditTodo}
+              deleteTodo={isBulkDeleteMode ? undefined : deleteTodo}
+              onToggleSelect={handleToggleSelect}
+              isBulkDeleteMode={isBulkDeleteMode}
+            />
+            <FloatingActions
+              onAddClick={() => setIsModalOpen(true)}
+              onBulkDeleteClick={handleToggleBulkDeleteMode}
+              onSelectAll={handleSelectAll}
+              onSelectCompleted={handleSelectCompleted}
+              onClearSelection={handleClearSelection}
+              onBulkDelete={handleBulkDelete}
+              disabled={isBulkDeleteMode}
+              isBulkDeleteMode={isBulkDeleteMode}
+              selectedCount={selectedCount}
+            />
+            <TodoModal
+              open={isModalOpen && !isBulkDeleteMode}
+              todo={selectedTodo}
+              onClose={() => {
+                setIsModalOpen(false);
+                setSelectedTodo(null);
+              }}
+              onSave={handleSaveTodo}
+              onDelete={deleteTodo}
+            />
+          </Box>
+        </Box>
+      )}
     </Container>
   );
 };
