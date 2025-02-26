@@ -5,7 +5,7 @@ import Todo from '../types/todo';
 export const useTodo = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
 
-  //Todoを追加する
+  //追加処理
   const addTodo = (title:string, dueDate:string) => {
     const newTodo:Todo = {
       id:Date.now(),
@@ -17,12 +17,12 @@ export const useTodo = () => {
     setTodos(prevTodos => [...prevTodos, newTodo]);
   };
 
-  //Todoを削除する
+  //削除処理
   const deleteTodo = (id:number) => {
     setTodos(todos.filter((todo) => todo.id !== id));
   };
 
-  //Todoを更新する
+  //更新処理
   const updateTodo = (id:number, updatedFields:Partial<Todo>) => {
     setTodos(todos.map((todo) => (todo.id === id ? { ...todo, ...updatedFields } : todo)));
   };
