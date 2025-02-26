@@ -52,4 +52,13 @@ export interface TodoListProps {
   isBulkDeleteMode: boolean;
 }
 
+export interface TodoCardProps {
+  todo: Todo;
+  onSelect: () => void;
+  onEdit?: () => void;
+  onDelete?: () => void;
+  onComplete: (completed: boolean) => void;
+  isBulkDeleteMode: boolean;
+}
+
 export default Todo;

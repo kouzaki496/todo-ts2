@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles';
 import { Checkbox } from '@mui/material';
 
-export const StyledStatusCheckbox = styled(Checkbox)(({ theme }) => ({
+export const StatusCheckBox = styled(Checkbox)(({ theme }) => ({
   color: theme.palette.primary.main,
   '&.Mui-checked': {
     color: theme.palette.primary.dark,
@@ -14,7 +14,7 @@ export const StyledStatusCheckbox = styled(Checkbox)(({ theme }) => ({
   },
 }));
 
-export const StyledDeleteCheckbox = styled(Checkbox)(({ theme }) => ({
+export const DeleteCheckBox = styled(Checkbox)(({ theme }) => ({
   height: '100%',
   display: 'flex',
   alignItems: 'center',

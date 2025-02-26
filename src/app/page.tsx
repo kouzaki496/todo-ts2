@@ -3,8 +3,7 @@
 
 import React, { useState } from 'react';
 import { Box, Container, Typography, Button, CircularProgress } from '@mui/material';
-import { useTodo } from '../hooks/useTodo';
-import TodoList from '../components/TodoList/TodoList';
+import { TodoList } from '@/components/Todo/List';
 import Header from '../components/Header/Header';
 import AddTodoButton from '../components/AddTodoButton/AddTodoButton';
 import TodoModal from '../components/Modals/TodoModal';
