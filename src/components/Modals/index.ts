@@ -1,1 +1,5 @@
-export { default as TodoModal } from './TodoModal';
+/**
+ * Modalsコンポーネントのエントリーポイント
+ * - TodoModal: Todoモーダルコンポーネント
+ */
+export { default as TodoModal } from '@/components/Modals/TodoModal';

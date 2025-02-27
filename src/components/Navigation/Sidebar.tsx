@@ -91,3 +91,5 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedCount = 0, disabled })
     </Drawer>
   );
 };
+
+export default Sidebar;

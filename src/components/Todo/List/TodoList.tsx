@@ -40,3 +40,5 @@ export const TodoList = ({
     </Stack>
   );
 };
+
+export default TodoList;
