@@ -68,8 +68,8 @@ export const useTodoRepository = () => {
    * 追加
    * @param todo
    */
-  const addTodo = useCallback(async (todo: Todo) => {
-    if (isAdding) return;  // 追加処理中なら新しい追加をブロック
+  const addTodo = useCallback(async (todo: Omit<Todo, 'id'>) => {
+    if (isAdding) return;
 
     setIsAdding(true);
     try {
@@ -80,7 +80,6 @@ export const useTodoRepository = () => {
       console.error('Error adding todo:', error);
       throw error;
     } finally {
-      // 追加処理完了後、一定時間待ってから次の追加を許可
       setTimeout(() => {
         setIsAdding(false);
       }, 1000);
