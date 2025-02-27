@@ -13,7 +13,8 @@ interface TodoModalProps {
 
 const TodoModal: React.FC<TodoModalProps> = ({ open, todo, onClose, onSave, onDelete }) => {
   const [editedTitle, setEditedTitle] = useState('');
-  const [editedDueDate, setEditedDueDate] = useState(new Date().toISOString().split('T')[0]);
+  const getDefaultDate = () => new Date().toISOString().split('T')[0];
+  const [editedDueDate, setEditedDueDate] = useState(getDefaultDate());
   const [editedDetails, setEditedDetails] = useState('');
   const [editedCompleted, setEditedCompleted] = useState(false);
 
@@ -26,7 +27,7 @@ const TodoModal: React.FC<TodoModalProps> = ({ open, todo, onClose, onSave, onDe
         setEditedCompleted(todo.completed);
       } else {
         setEditedTitle('');
-        setEditedDueDate(new Date().toISOString().split('T')[0]);
+        setEditedDueDate(getDefaultDate());
         setEditedDetails('');
         setEditedCompleted(false);
       }
@@ -82,7 +83,7 @@ const TodoModal: React.FC<TodoModalProps> = ({ open, todo, onClose, onSave, onDe
           value={editedDueDate}
           onChange={(e) => setEditedDueDate(e.target.value)}
           inputProps={{
-            min: new Date().toISOString().split('T')[0],
+            min: getDefaultDate(),
           }}
         />
         <TextField
