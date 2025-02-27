@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { Box, Container, Typography, Button, CircularProgress } from '@mui/material';
 import { TodoList } from '@/components/Todo/List';
 import Header from '../components/Header/Header';
-import AddTodoButton from '../components/AddTodoButton/AddTodoButton';
+import AddTodoButton from '../components/Todo/AddTodoButton/AddTodoButton';
 import TodoModal from '../components/Modals/TodoModal';
 import Todo from '../types/todo';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';

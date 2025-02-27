@@ -2,4 +2,4 @@
  * AddTodoButtonコンポーネントのエントリーポイント
  * - AddTodoButton: Todoを追加するボタン
  */
-export { default } from '@/components/AddTodoButton/AddTodoButton';
+export { default } from '@/components/Todo/AddTodoButton/AddTodoButton';

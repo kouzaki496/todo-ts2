@@ -2,7 +2,7 @@
 import React, { useState, useEffect, memo } from 'react';
 import { AppBar, Toolbar, Typography, CssBaseline, useMediaQuery, useTheme, Avatar, IconButton, Box } from '@mui/material';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import Button from '../Button/Button';
+import Button from '../common/Button/Button';
 import MenuList from '../MenuList/MenuList';
 import { signInWithGoogle } from '../../service/authService';
 import { onAuthStateChanged, User, signOut } from 'firebase/auth';

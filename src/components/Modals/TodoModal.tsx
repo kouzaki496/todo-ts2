@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, TextField, Box, FormControlLabel, Checkbox } from '@mui/material';
-import Button from '../Button/Button';
+import Button from '../common/Button/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Todo from '../../types/todo';
 
