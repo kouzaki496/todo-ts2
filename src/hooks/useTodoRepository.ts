@@ -15,15 +15,32 @@ export const useTodoRepository = () => {
   const [todos, setTodos] = useState<Todo[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [authChecked, setAuthChecked] = useState(false);  // 認証チェック完了フラグを追加
   const [error, setError] = useState<Error | null>(null);
   const [isAdding, setIsAdding] = useState(false);
+
+  // ローカルストレージからTodoを取得
+  const getLocalTodos = () => {
+    const localTodos = localStorage.getItem('todos');
+    return localTodos ? JSON.parse(localTodos) : [];
+  };
+
+  // ローカルストレージにTodoを保存
+  const saveLocalTodos = (newTodos: Todo[]) => {
+    localStorage.setItem('todos', JSON.stringify(newTodos));
+  };
 
   // 認証状態の監視
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUserId(user?.uid || null);
+      setAuthChecked(true);
+      if (!user) {
+        // 未認証時はローカルストレージから読み込み
+        setTodos(getLocalTodos());
+        setLoading(false);
+      }
     });
-    //アンマウント時に監視解除
     return () => unsubscribe();
   }, []);
 
@@ -32,8 +49,14 @@ export const useTodoRepository = () => {
    * @param uid
    */
   const fetchTodos = async (uid: string | null) => {
-    if (!uid) return;
+    if (!uid) {
+      // 未認証時はローカルストレージから読み込み
+      setTodos(getLocalTodos());
+      setLoading(false);
+      return;
+    }
 
+    // 認証時はFirestoreから読み込み
     setLoading(true);
     setError(null);
     try {
@@ -64,27 +87,36 @@ export const useTodoRepository = () => {
     selected: todo.selected,
   });
 
-  /**
-   * 追加
-   * @param todo
-   */
+  // 未認証時のTodo操作
+  const addLocalTodo = (todo: Omit<Todo, 'id'>) => {
+    const newTodo = {
+      ...todo,
+      id: Date.now().toString(),
+    };
+    const newTodos = [...todos, newTodo];
+    setTodos(newTodos);
+    saveLocalTodos(newTodos);
+    return newTodo;
+  };
+
+  // Todoの追加
   const addTodo = useCallback(async (todo: Omit<Todo, 'id'>) => {
     if (isAdding) return;
-
     setIsAdding(true);
+
     try {
+      if (!userId) {
+        // 未認証時はローカルストレージに保存
+        return addLocalTodo(todo);
+      }
+      // 認証時はFirestoreに保存
       const newTodo = await TodoRepository.addTodo(todo, userId);
       setTodos(prev => [...prev, newTodo]);
       return newTodo;
-    } catch (error) {
-      console.error('Error adding todo:', error);
-      throw error;
     } finally {
-      setTimeout(() => {
-        setIsAdding(false);
-      }, 1000);
+      setTimeout(() => setIsAdding(false), 1000);
     }
-  }, [isAdding, userId]);
+  }, [isAdding, userId, todos]);
 
   /**
    * 更新
@@ -137,6 +169,7 @@ export const useTodoRepository = () => {
     updateTodo,
     deleteTodo,
     isAuthenticated: !!userId,
+    authChecked,  // 認証チェック完了状態を公開
     refresh: () => fetchTodos(userId),
   };
 };
