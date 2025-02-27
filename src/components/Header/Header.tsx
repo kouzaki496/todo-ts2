@@ -2,15 +2,13 @@
 import React, { useState, useEffect, memo } from 'react';
 import { AppBar, Toolbar, Typography, CssBaseline, useMediaQuery, useTheme, Avatar, IconButton, Box } from '@mui/material';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import Button from '../common/Button/Button';
-import MenuList from '../MenuList/MenuList';
-import { signInWithGoogle } from '../../service/authService';
+import { Button, MenuList } from '@/components';
+import { signInWithGoogle } from '@/service/authService';
 import { onAuthStateChanged, User, signOut } from 'firebase/auth';
-import { auth } from '../../config/firebaseConfig';
+import { auth } from '@/config/firebaseConfig';
 import { Settings, Logout } from '@mui/icons-material';
-import { useAuth } from '../../hooks/useAuth';
+import { useAuth } from '@/hooks/useAuth';
 
-// HeaderPropsの定義
 export interface HeaderProps {
   title: string;
   subtitle?: string;

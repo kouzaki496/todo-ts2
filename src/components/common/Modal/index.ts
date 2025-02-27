@@ -3,5 +3,5 @@
  * Modalコンポーネントのエントリーポイント
  * - Modal: モーダーのコンポーネント
  */
-export { default } from '@/components/common/Modal/Modal';
-export type { ModalProps } from '@/components/common/Modal/Modal';
+export { default } from './Modal';
+export type { ModalProps } from './Modal';

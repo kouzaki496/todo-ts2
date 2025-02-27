@@ -4,5 +4,5 @@
  * - TodoItemProps: TodoItemコンポーネントのプロパティ型
  */
 
-export { default } from '@/components/Todo/Item/TodoItem';
+export { default } from './TodoItem';
 export type { TodoItemProps } from '@/types/todo';

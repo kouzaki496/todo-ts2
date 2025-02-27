@@ -6,6 +6,8 @@
  * - TodoItemProps: TodoItemコンポーネントのプロパティ型
  */
 
-export { TodoList } from '@/components/Todo/List/TodoList';
-export { TodoItem } from '@/components/Todo/Item/TodoItem';
+export { default as TodoList } from './List/TodoList';
+export { default as TodoItem } from './Item/TodoItem';
+export { default as AddTodoButton } from './AddTodoButton';
+export { default as TodoModal } from './TodoModal';
 export type { TodoListProps, TodoItemProps } from '@/types/todo';

@@ -1,6 +1,6 @@
 import React from 'react';
-import AddTodoButton from '../Todo/AddTodoButton/AddTodoButton';
-import { Box, Fab, SpeedDial, SpeedDialAction } from '@mui/material';
+import { AddTodoButton } from '@/components/Todo';
+import { Box, SpeedDial, SpeedDialAction } from '@mui/material';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import SelectAllIcon from '@mui/icons-material/SelectAll';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -45,7 +45,10 @@ export const FloatingActions: React.FC<FloatingActionsProps> = ({
         ariaLabel="Bulk actions"
         icon={<DeleteSweepIcon />}
         direction="up"
-        onClick={onBulkDeleteClick}
+        onClick={(e) => {
+          e.stopPropagation();
+          onBulkDeleteClick?.();
+        }}
         open={isBulkDeleteMode}
         FabProps={{
           color: "primary",
@@ -103,7 +106,7 @@ export const FloatingActions: React.FC<FloatingActionsProps> = ({
         )}
       </SpeedDial>
       <AddTodoButton
-        onClick={onAddClick}
+        onClick={onAddClick || (() => {})}
         disabled={isBulkDeleteMode}
         sx={{
           opacity: isBulkDeleteMode ? 0.6 : 1,

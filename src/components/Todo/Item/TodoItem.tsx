@@ -26,15 +26,7 @@ export const TodoItem = ({
   onComplete,
   onEdit
 }: TodoItemProps) => {
-  const handleCardClick = (e: React.MouseEvent) => {
-    // 編集ボタンやチェックボックスをクリックした場合は、カード全体のクリックを無視
-    if (
-      e.target instanceof HTMLElement &&
-      (e.target.closest('button') || e.target.closest('.MuiCheckbox-root'))
-    ) {
-      return;
-    }
-
+  const handleCardClick = () => {
     if (isBulkDeleteMode) {
       onSelect?.();
     } else {

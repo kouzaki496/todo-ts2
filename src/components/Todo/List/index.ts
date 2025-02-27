@@ -4,5 +4,5 @@
  * - TodoListProps: TodoListコンポーネントのプロパティ型
  */
 
-export { default } from '@/components/Todo/List/TodoList';
+export { default } from './TodoList';
 export type { TodoListProps } from '@/types/todo';
