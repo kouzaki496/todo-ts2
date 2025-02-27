@@ -1,10 +1,11 @@
 //src/hooks/useTodoRepository.ts
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../config/firebaseConfig';
 import { TodoRepository } from '../repositories/TodoRepository';
 import Todo from '../types/todo';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 /**
  * Todoリストの状態管理とデータベース操作を行うカスタムフック
@@ -15,6 +16,7 @@ export const useTodoRepository = () => {
   const [userId, setUserId] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+  const [isAdding, setIsAdding] = useState(false);
 
   // 認証状態の監視
   useEffect(() => {
@@ -66,7 +68,10 @@ export const useTodoRepository = () => {
    * 追加
    * @param todo
    */
-  const addTodo = async (todo: Omit<Todo, 'id'>) => {
+  const addTodo = useCallback(async (todo: Todo) => {
+    if (isAdding) return;  // 追加処理中なら新しい追加をブロック
+
+    setIsAdding(true);
     try {
       const newTodo = await TodoRepository.addTodo(todo, userId);
       setTodos(prev => [...prev, newTodo]);
@@ -74,8 +79,13 @@ export const useTodoRepository = () => {
     } catch (error) {
       console.error('Error adding todo:', error);
       throw error;
+    } finally {
+      // 追加処理完了後、一定時間待ってから次の追加を許可
+      setTimeout(() => {
+        setIsAdding(false);
+      }, 1000);
     }
-  };
+  }, [isAdding, userId]);
 
   /**
    * 更新
@@ -124,6 +134,7 @@ export const useTodoRepository = () => {
     loading,
     error,
     addTodo,
+    isAdding,
     updateTodo,
     deleteTodo,
     isAuthenticated: !!userId,
