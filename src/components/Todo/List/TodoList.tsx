@@ -2,6 +2,7 @@
 import { Stack } from "@mui/material";
 import TodoItem from "../Item/TodoItem";
 import { TodoListProps } from "@/types/todo";
+import { compareDates } from '../../../utils/date';
 
 /**
  * Todoリストを表示するコンポーネント
@@ -12,17 +13,13 @@ export const TodoList = ({
   todos,
   updateTodo,
   onEdit,
-  deleteTodo,
   onToggleSelect,
   isBulkDeleteMode
 }: TodoListProps) => {
   return (
     <Stack spacing={2}>
       {todos.map(todo => {
-        // 日付関連のロジックをインライン化
-        const today = new Date().toISOString().split('T')[0];
-        const isOverdue = new Date(todo.dueDate) < new Date(today);
-        const isDueToday = todo.dueDate === today;
+        const { isOverdue, isDueToday } = compareDates(todo.dueDate);
 
         return (
           <TodoItem

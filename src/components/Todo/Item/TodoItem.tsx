@@ -1,7 +1,10 @@
 /**
- * Todoの表示用カードコンポーネント
- * - 見た目の制御のみを担当
- * - ロジックは持たない
+ * Todoアイテムの表示コンポーネント
+ * - 個々のTodoの表示を担当
+ * - 完了状態の表示
+ * - 期限切れ/当日の警告表示
+ * - 選択状態の表示
+ * - 一括削除モードでのチェックボックス表示
  */
 import React from 'react';
 import { CardContent, Typography, Box, IconButton, Theme } from '@mui/material';
@@ -9,19 +12,7 @@ import { Card } from '../../common/Card';
 import { StatusCheckBox, DeleteCheckBox } from '../../common/CheckBox';
 import EditIcon from '@mui/icons-material/Edit';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
-
-export interface TodoItemProps {
-  title: string;
-  completed: boolean;
-  selected: boolean;
-  dueDate: string;
-  isOverdue: boolean;
-  isDueToday: boolean;
-  isBulkDeleteMode: boolean;
-  onSelect: () => void;
-  onComplete: (checked: boolean) => void;
-  onEdit?: () => void;
-}
+import { TodoItemProps } from '../../../types/todo';
 
 const TodoItem = ({
   title,

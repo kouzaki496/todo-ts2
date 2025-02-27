@@ -29,15 +29,19 @@ export interface Todo extends TodoBase {
 }
 
 /**
- * Todoリストアイテムのプロップス型
+ * Todoアイテムのプロップス型
  */
 export interface TodoItemProps {
-  todo: Todo;
-  updateTodo: (todo: Todo) => Promise<void>;
-  deleteTodo?: (id: TodoId) => Promise<void>;
-  onEdit?: (todo: Todo) => void;
-  onToggleSelect: (id: TodoId) => void;
+  title: string;
+  completed: boolean;
+  selected: boolean;
+  dueDate: string;
+  isOverdue: boolean;
+  isDueToday: boolean;
   isBulkDeleteMode: boolean;
+  onSelect: () => void;
+  onComplete: (checked: boolean) => void;
+  onEdit?: () => void;
 }
 
 /**

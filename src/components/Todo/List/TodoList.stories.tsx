@@ -1,7 +1,7 @@
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
 import { TodoList } from './TodoList';
-import type Todo from '../../../types/todo';
+import type { TodoListProps } from '../../../types/todo';
 
 export default {
   title: 'Components/TodoList',
@@ -10,10 +10,11 @@ export default {
 
 const Template: StoryFn<typeof TodoList> = (args) => <TodoList {...args} />;
 
-const commonHandlers = {
-  updateTodo: async (todo: Todo) => console.log('Update Todo:', todo),
-  deleteTodo: async (id: string | number) => console.log('Delete Todo:', id),
-};
+const today = new Date();
+const yesterday = new Date(today);
+yesterday.setDate(yesterday.getDate() - 1);
+const dayBeforeYesterday = new Date(today);
+dayBeforeYesterday.setDate(dayBeforeYesterday.getDate() - 2);
 
 export const Default = Template.bind({});
 Default.args = {
@@ -22,23 +23,33 @@ Default.args = {
       id: 1,
       title: 'Sample Task 1',
       completed: false,
-      dueDate: new Date(Date.now() + 86400000).toISOString().split('T')[0], // 明日の日付
+      dueDate: today.toISOString().split('T')[0],
       selected: false,
     },
     {
       id: 2,
       title: 'Sample Task 2',
-      completed: true,
-      dueDate: new Date().toISOString().split('T')[0], // 今日の日付
+      completed: false,
+      dueDate: yesterday.toISOString().split('T')[0],
       selected: false,
     },
     {
       id: 3,
       title: 'Sample Task 3',
       completed: false,
-      dueDate: new Date(Date.now() - 86400000).toISOString().split('T')[0], // 昨日の日付
+      dueDate: dayBeforeYesterday.toISOString().split('T')[0],
       selected: false,
     },
   ],
-  ...commonHandlers
+  updateTodo: async (todo) => console.log('Update Todo:', todo),
+  onEdit: (todo) => console.log('Edit Todo:', todo),
+  onToggleSelect: (id) => console.log('Toggle Select:', id),
+  isBulkDeleteMode: false,
+};
+
+export const BulkDeleteMode = Template.bind({});
+BulkDeleteMode.args = {
+  ...Default.args,
+  isBulkDeleteMode: true,
+  todos: Default.args?.todos?.map(todo => ({ ...todo, selected: true })) || [],
 };
