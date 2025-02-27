@@ -2,18 +2,16 @@
 "use client";
 
 import React, { useState } from 'react';
-import { Box, Container, Typography, Button, CircularProgress } from '@mui/material';
-import { TodoList } from '@/components/Todo/List';
-import Header from '../components/Header/Header';
-import AddTodoButton from '../components/Todo/AddTodoButton/AddTodoButton';
-import TodoModal from '../components/Modals/TodoModal';
-import Todo from '../types/todo';
-import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
-import { FloatingActions } from '../components/FloatingActions/FloatingActions';
-import { useTodoRepository } from '../hooks/useTodoRepository';
+import { Box, Container, Typography, CircularProgress } from '@mui/material';
+import { Header } from '@/components';
+import { TodoList } from '@/components/Todo';
+import TodoModal from '@/components/Modals/TodoModal';
+import Todo from '@/types/todo';
+import { FloatingActions } from '@/components/FloatingActions/FloatingActions';
+import { useTodoRepository } from '@/hooks/useTodoRepository';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
-import { Sidebar } from '../components/Navigation/Sidebar';
+import { Sidebar } from '@/components/Navigation/Sidebar';
 
 const initialTodos: Todo[] = [
   {
