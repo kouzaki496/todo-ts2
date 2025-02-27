@@ -8,16 +8,30 @@ interface AddTodoButtonProps {
   sx?: object;
 }
 
-const AddTodoButton: React.FC<AddTodoButtonProps> = ({ onClick, disabled, sx }) => {
+const AddTodoButton = ({ onClick, disabled, sx }: AddTodoButtonProps) => {
+  const [isClicking, setIsClicking] = React.useState(false);
+
+  const handleClick = () => {
+    if (isClicking || disabled) return;
+
+    setIsClicking(true);
+    onClick();
+
+    // 1秒間はクリックを無効化
+    setTimeout(() => {
+      setIsClicking(false);
+    }, 1000);
+  };
+
   return (
     <Fab
       color="primary"
       aria-label="add"
-      onClick={disabled ? undefined : onClick}
-      disabled={disabled}
+      onClick={handleClick}
+      disabled={disabled || isClicking}
       sx={{
         ...sx,
-        opacity: disabled ? 0.6 : 1,
+        opacity: (disabled || isClicking) ? 0.6 : 1,
       }}
     >
       <AddIcon />
