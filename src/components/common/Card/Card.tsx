@@ -19,7 +19,7 @@ export const BaseCard = ({
   selected,
   disabled,
   className,
-  sx = {}  // デフォルト値を追加
+  sx = {}
 }: CardProps) => {
   return (
     <MuiCard
@@ -28,7 +28,7 @@ export const BaseCard = ({
       sx={{
         opacity: disabled ? 0.5 : 1,
         border: selected ? '2px solid primary.main' : 'none',
-        ...sx  // 渡されたsxプロパティをマージ
+        ...sx
       }}
     >
       {children}
@@ -36,4 +36,4 @@ export const BaseCard = ({
   );
 };
 
-export const Card = BaseCard;  // BaseCardをCardとしてエクスポート
+export const Card = BaseCard;

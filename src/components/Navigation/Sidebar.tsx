@@ -21,7 +21,7 @@ interface SidebarProps {
   disabled?: boolean;
 }
 
-export const Sidebar: React.FC<SidebarProps> = ({ selectedCount = 0, disabled }) => {
+export const Sidebar = ({ selectedCount = 0, disabled }: SidebarProps) => {
   const theme = useTheme();
 
   return (
@@ -64,7 +64,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedCount = 0, disabled })
               <ListItemIcon>
                 <StarIcon />
               </ListItemIcon>
-              <ListItemText primary="重要" />
+              <ListItemText primary="重要(未実装)" />
             </ListItemButton>
           </ListItem>
         </List>
@@ -75,7 +75,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedCount = 0, disabled })
               <ListItemIcon>
                 <AccessTimeIcon />
               </ListItemIcon>
-              <ListItemText primary="今日" />
+              <ListItemText primary="今日(未実装)" />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -83,7 +83,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ selectedCount = 0, disabled })
               <ListItemIcon>
                 <CheckCircleIcon />
               </ListItemIcon>
-              <ListItemText primary="完了済み" />
+              <ListItemText primary="完了済み(未実装)" />
             </ListItemButton>
           </ListItem>
         </List>

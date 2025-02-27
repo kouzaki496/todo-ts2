@@ -31,6 +31,7 @@ export const FloatingActions: React.FC<FloatingActionsProps> = ({
 }) => {
   return (
     <Box
+      onClick={(e) => e.stopPropagation()}
       sx={{
         position: 'fixed',
         bottom: 16,
