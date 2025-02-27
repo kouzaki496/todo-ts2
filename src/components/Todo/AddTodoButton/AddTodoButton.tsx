@@ -1,16 +1,27 @@
 import React from 'react';
-import Button from '@/components/common/Button/Button';
+import { Fab } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
-const AddTodoButton: React.FC<{ onClick: () => void }> = ({ onClick }) => {
+interface AddTodoButtonProps {
+  onClick: () => void;
+  disabled?: boolean;
+  sx?: object;
+}
+
+const AddTodoButton: React.FC<AddTodoButtonProps> = ({ onClick, disabled, sx }) => {
   return (
-    <Button
-      onClick={onClick}
-      label="タスクを追加"
-      icon={<AddIcon />}
+    <Fab
       color="primary"
-      variant="contained"
-    />
+      aria-label="add"
+      onClick={disabled ? undefined : onClick}
+      disabled={disabled}
+      sx={{
+        ...sx,
+        opacity: disabled ? 0.6 : 1,
+      }}
+    >
+      <AddIcon />
+    </Fab>
   );
 };
 

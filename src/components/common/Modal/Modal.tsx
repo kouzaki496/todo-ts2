@@ -9,7 +9,11 @@ import Button from '@/components/common/Button/Button';
  * - onClose: モーダルを閉じるための関数
  * - onConfirm: モーダルを閉じるための関数
  * - onCancel: モーダルを閉じるための関数
+ * - onDelete: モーダルを削除するための関数
  * - children: モーダーの内容
+ * - maxWidth: モーダルの最大幅
+ * - fullWidth: モーダルが全幅に表示されるかどうか
+ * - deleteButton: 削除ボタンを表示するかどうか
  */
 export interface ModalProps {
   open: boolean;
@@ -17,19 +21,64 @@ export interface ModalProps {
   onClose: () => void;
   onConfirm?: () => void;
   onCancel?: () => void;
+  onDelete?: () => void;
   children: React.ReactNode;
+  maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  fullWidth?: boolean;
+  deleteButton?: boolean;
 }
 
-const Modal = ({ open, title, onClose, onConfirm, onCancel, children }: ModalProps) => {
+const Modal = ({
+  open,
+  title,
+  onClose,
+  onConfirm,
+  onCancel,
+  onDelete,
+  children,
+  maxWidth = 'md',
+  fullWidth = true,
+  deleteButton
+}: ModalProps) => {
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog
+      open={open}
+      onClose={onClose}
+      maxWidth={maxWidth}
+      fullWidth={fullWidth}
+    >
       <DialogTitle>{title}</DialogTitle>
       <DialogContent>
         {children}
       </DialogContent>
-      <DialogActions>
-        {onCancel && <Button onClick={onCancel} color="secondary">キャンセル</Button>}
-        {onConfirm && <Button onClick={onConfirm} color="primary">確認</Button>}
+      <DialogActions sx={{ padding: 2, gap: 1 }}>
+        {deleteButton && onDelete && (
+          <Button
+            onClick={onDelete}
+            color="error"
+            variant="contained"
+            label="削除"
+            sx={{ mr: 'auto' }}
+          />
+        )}
+        {onCancel && (
+          <Button
+            onClick={onCancel}
+            color="primary"
+            variant="outlined"
+            label="キャンセル"
+            sx={{ minWidth: 100 }}
+          />
+        )}
+        {onConfirm && (
+          <Button
+            onClick={onConfirm}
+            color="primary"
+            variant="contained"
+            label="保存"
+            sx={{ minWidth: 100 }}
+          />
+        )}
       </DialogActions>
     </Dialog>
   );

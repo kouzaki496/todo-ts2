@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import TodoModal from './TodoModal';
-import type Todo from '../../types/todo';
+import { TodoModal } from '@/components/Todo/TodoModal';
+import type Todo from '@/types/todo';
 
 const meta = {
   title: 'Components/Modals/TodoModal',

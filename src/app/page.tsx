@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { Box, Container, Typography, CircularProgress } from '@mui/material';
 import { Header } from '@/components';
 import { TodoList } from '@/components/Todo';
-import TodoModal from '@/components/Modals/TodoModal';
+import TodoModal from '@/components/Todo/TodoModal/TodoModal';
 import Todo from '@/types/todo';
 import { FloatingActions } from '@/components/FloatingActions/FloatingActions';
 import { useTodoRepository } from '@/hooks/useTodoRepository';

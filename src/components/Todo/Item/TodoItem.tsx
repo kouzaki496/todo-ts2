@@ -26,6 +26,22 @@ export const TodoItem = ({
   onComplete,
   onEdit
 }: TodoItemProps) => {
+  const handleCardClick = (e: React.MouseEvent) => {
+    // 編集ボタンやチェックボックスをクリックした場合は、カード全体のクリックを無視
+    if (
+      e.target instanceof HTMLElement &&
+      (e.target.closest('button') || e.target.closest('.MuiCheckbox-root'))
+    ) {
+      return;
+    }
+
+    if (isBulkDeleteMode) {
+      onSelect?.();
+    } else {
+      onComplete?.(!completed);
+    }
+  };
+
   return (
     <Box sx={{
       display: 'flex',
@@ -52,13 +68,13 @@ export const TodoItem = ({
       <Card
         selected={selected}
         disabled={isBulkDeleteMode}
-        onClick={onSelect}
+        onClick={handleCardClick}
         sx={{
           flex: 1,
           mb: 2,
           display: 'flex',
           alignItems: 'center',
-          cursor: isBulkDeleteMode ? 'default' : 'pointer',
+          cursor: 'pointer',
           boxShadow: 4,
           borderRadius: 3,
           backgroundColor: selected ? 'action.selected' : (completed ? 'grey.100' : 'background.paper'),
