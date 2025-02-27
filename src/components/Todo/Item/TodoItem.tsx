@@ -1,3 +1,10 @@
+import React from 'react';
+import { CardContent, Typography, Box, IconButton, Theme } from '@mui/material';
+import { Card } from '@/components/common/Card';
+import { StatusCheckBox, DeleteCheckBox } from '@/components/common/CheckBox';
+import EditIcon from '@mui/icons-material/Edit';
+import WhatshotIcon from '@mui/icons-material/Whatshot';
+import { TodoItemProps } from '@/types/todo';
 /**
  * Todoアイテムの表示コンポーネント
  * - 個々のTodoの表示を担当
@@ -6,15 +13,8 @@
  * - 選択状態の表示
  * - 一括削除モードでのチェックボックス表示
  */
-import React from 'react';
-import { CardContent, Typography, Box, IconButton, Theme } from '@mui/material';
-import { Card } from '../../common/Card';
-import { StatusCheckBox, DeleteCheckBox } from '../../common/CheckBox';
-import EditIcon from '@mui/icons-material/Edit';
-import WhatshotIcon from '@mui/icons-material/Whatshot';
-import { TodoItemProps } from '../../../types/todo';
 
-const TodoItem = ({
+export const TodoItem = ({
   title,
   completed,
   selected,

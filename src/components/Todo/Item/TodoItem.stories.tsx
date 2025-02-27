@@ -1,9 +1,10 @@
 //src/components/Todo/Item/TodoItem.stories.tsx
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
-import TodoItem from './TodoItem';
-import type { TodoItemProps } from '../../../types/todo';
-import { compareDates } from '../../../utils/date';
+import TodoItem from '@/components/Todo/Item/TodoItem';
+import type { TodoItemProps } from '@/types/todo';
+import { getTestDates } from '@/utils/date';
+import { compareDates } from '@/utils/date';
 
 export default {
   title: 'Components/TodoItem',
@@ -12,11 +13,7 @@ export default {
 
 const Template: StoryFn<TodoItemProps> = (args) => <TodoItem {...args} />;
 
-const MILLISECONDS_IN_A_DAY = 24 * 60 * 60 * 1000;
-
-const today = new Date().toISOString().split('T')[0];
-const yesterday = new Date(Date.now() - MILLISECONDS_IN_A_DAY).toISOString().split('T')[0];
-const tomorrow = new Date(Date.now() + MILLISECONDS_IN_A_DAY).toISOString().split('T')[0];
+const { today, yesterday, tomorrow } = getTestDates();
 const { isOverdue, isDueToday } = compareDates(tomorrow);
 
 export const Default = Template.bind({});

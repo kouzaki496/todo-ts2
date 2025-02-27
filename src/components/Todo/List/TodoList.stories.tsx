@@ -1,7 +1,9 @@
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
-import { TodoList } from './TodoList';
-import type { TodoListProps } from '../../../types/todo';
+import { TodoList} from '@/components/Todo/List/TodoList';
+import type { TodoListProps } from '@/types/todo';
+import { getTestDates } from '@/utils/date';
+import { createSampleTodo } from '@/utils/storybook';
 
 export default {
   title: 'Components/TodoList',
@@ -10,40 +12,23 @@ export default {
 
 const Template: StoryFn<typeof TodoList> = (args) => <TodoList {...args} />;
 
-const today = new Date();
-const yesterday = new Date(today);
-yesterday.setDate(yesterday.getDate() - 1);
-const dayBeforeYesterday = new Date(today);
-dayBeforeYesterday.setDate(dayBeforeYesterday.getDate() - 2);
+const { today, yesterday, dayBeforeYesterday } = getTestDates();
+
+// イベントハンドラをオブジェクトにまとめる
+const handlers: Pick<TodoListProps, 'updateTodo' | 'onEdit' | 'onToggleSelect'> = {
+  updateTodo: async (todo) => console.log('Update Todo:', todo),
+  onEdit: (todo) => console.log('Edit Todo:', todo),
+  onToggleSelect: (id) => console.log('Toggle Select:', id),
+};
 
 export const Default = Template.bind({});
 Default.args = {
   todos: [
-    {
-      id: 1,
-      title: 'Sample Task 1',
-      completed: false,
-      dueDate: today.toISOString().split('T')[0],
-      selected: false,
-    },
-    {
-      id: 2,
-      title: 'Sample Task 2',
-      completed: false,
-      dueDate: yesterday.toISOString().split('T')[0],
-      selected: false,
-    },
-    {
-      id: 3,
-      title: 'Sample Task 3',
-      completed: false,
-      dueDate: dayBeforeYesterday.toISOString().split('T')[0],
-      selected: false,
-    },
+    createSampleTodo(1, 'Sample Task 1', today),
+    createSampleTodo(2, 'Sample Task 2', yesterday),
+    createSampleTodo(3, 'Sample Task 3', dayBeforeYesterday),
   ],
-  updateTodo: async (todo) => console.log('Update Todo:', todo),
-  onEdit: (todo) => console.log('Edit Todo:', todo),
-  onToggleSelect: (id) => console.log('Toggle Select:', id),
+  ...handlers,
   isBulkDeleteMode: false,
 };
 
@@ -51,5 +36,9 @@ export const BulkDeleteMode = Template.bind({});
 BulkDeleteMode.args = {
   ...Default.args,
   isBulkDeleteMode: true,
-  todos: Default.args?.todos?.map(todo => ({ ...todo, selected: true })) || [],
+  todos: [
+    createSampleTodo(1, 'Sample Task 1', today),
+    createSampleTodo(2, 'Sample Task 2', yesterday),
+    createSampleTodo(3, 'Sample Task 3', dayBeforeYesterday),
+  ].map(todo => ({ ...todo, selected: true })),
 };

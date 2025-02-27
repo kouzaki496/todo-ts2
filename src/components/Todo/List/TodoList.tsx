@@ -1,8 +1,8 @@
 //src/components/Todo/List/TodoList.tsx
 import { Stack } from "@mui/material";
-import TodoItem from "../Item/TodoItem";
+import TodoItem from "@/components/Todo/Item/TodoItem";
 import { TodoListProps } from "@/types/todo";
-import { compareDates } from '../../../utils/date';
+import { compareDates } from '@/utils/date';
 
 /**
  * Todoリストを表示するコンポーネント
