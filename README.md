@@ -2,6 +2,27 @@
 
 Todo アプリケーション。Next.js + TypeScript + Firebase で構築。
 
+## アーキテクチャ
+
+### レイヤー構成
+
+1. **UI レイヤー** (`src/app`, `src/components/`)
+
+   - ユーザーインターフェース
+   - イベントハンドリング
+   - `useTodoStore` フックを使用してデータ操作
+
+2. **Store レイヤー** (`src/hooks/useTodoStore.ts`)
+
+   - 状態管理
+   - 認証状態に応じたストレージの切り替え
+   - LocalStorage/Firebase 操作の抽象化
+
+3. **サービスレイヤー** (`src/services/TodoFirebaseService.ts`)
+   - Firebase との通信処理
+   - CRUD オペレーション
+   - データの永続化
+
 ## デモ
 
 https://portfolio-1458b.web.app
@@ -24,7 +45,7 @@ npm install
 npm run dev
 
 # Storybook の起動
-npm run storybook
+npm run sb
 ```
 
 ## デプロイ
@@ -48,37 +69,3 @@ firebase deploy --only firestore   # Firestore のみ
 - Firebase (Authentication, Firestore)
 - Material-UI
 - Storybook
-
-## ライセンス
-
-MIT
-
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-## Deploy Commands
-
-```bash
-# Build the Next.js app
-npm run build
-
-# Deploy to Firebase (Hosting and Firestore)
-firebase deploy --only hosting,firestore
-
-# Deploy specific services
-firebase deploy --only hosting  # Deploy only hosting
-firebase deploy --only firestore  # Deploy only Firestore rules
-```
