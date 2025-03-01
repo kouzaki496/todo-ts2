@@ -4,7 +4,7 @@ import Modal from './Modal';
 import Button from '../Button';
 
 const meta: Meta<typeof Modal> = {
-  title: 'Components/Modal',
+  title: 'Common/Modal',
   component: Modal,
 };
 

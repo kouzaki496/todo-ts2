@@ -4,9 +4,10 @@ import colors from '@/theme/colors';
 
 export type CustomTextFieldProps = MuiTextFieldProps & {
   isEditable: boolean;
+  disablePointerEvents?: boolean;
 };
 
-const TextField = ({ isEditable, ...props }: CustomTextFieldProps) => {
+const TextField = ({ isEditable, disablePointerEvents = false, ...props }: CustomTextFieldProps) => {
   return (
     <MuiTextField
       {...props}
@@ -19,12 +20,14 @@ const TextField = ({ isEditable, ...props }: CustomTextFieldProps) => {
           multiline: true,
           rows: 4,
           style: {
-            resize: 'both',
-            overflow: 'auto',
+            pointerEvents: disablePointerEvents && !isEditable ? 'none' : 'auto',
           },
         },
         inputLabel: {
           shrink: true,
+          style: {
+            pointerEvents: disablePointerEvents && !isEditable ? 'none' : 'auto',
+          },
         },
       }}
       sx={{

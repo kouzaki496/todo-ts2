@@ -4,9 +4,10 @@ import colors from '@/theme/colors';
 
 export type CustomInputProps = MuiTextFieldProps & {
   isEditable: boolean;
+  disablePointerEvents?: boolean;
 };
 
-const Input = ({ isEditable, ...props }: CustomInputProps) => {
+const Input = ({ isEditable, disablePointerEvents = false, ...props }: CustomInputProps) => {
   return (
     <MuiTextField
       {...props}
@@ -18,9 +19,15 @@ const Input = ({ isEditable, ...props }: CustomInputProps) => {
       slotProps={{
         input: {
           readOnly: !isEditable,
+          style: {
+            pointerEvents: disablePointerEvents && !isEditable ? 'none' : 'auto',
+          },
         },
         inputLabel: {
           shrink: true,
+          style: {
+            pointerEvents: disablePointerEvents && !isEditable ? 'none' : 'auto',
+          },
         },
       }}
       sx={{

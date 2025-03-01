@@ -10,6 +10,7 @@ export default {
     label: { control: 'text' },
     placeholder: { control: 'text' },
     helperText: { control: 'text' },
+    disablePointerEvents: { control: 'boolean', defaultValue: false },
   },
 } as Meta<typeof TextField>;
 
@@ -29,6 +30,7 @@ ReadOnly.args = {
   label: 'Read-Only TextField',
   placeholder: 'Cannot edit',
   helperText: 'This field is read-only',
+  disablePointerEvents: true,
 };
 
 export const Required = Template.bind({});

@@ -5,7 +5,7 @@ import Button from './Button';
 import AddIcon from '@mui/icons-material/Add';
 
 const meta: Meta<typeof Button> = {
-  title: 'Components/Button',
+  title: 'Common/Button',
   component: Button,
   tags: ['autodocs'],
   argTypes: {

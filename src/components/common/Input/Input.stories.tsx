@@ -8,6 +8,7 @@ export default {
   argTypes: {
     isEditable: { control: 'boolean' },
     placeholder: { control: 'text' },
+    disablePointerEvents: { control: 'boolean', defaultValue: false },
   },
 } as Meta<typeof Input>;
 
@@ -25,6 +26,7 @@ ReadOnly.args = {
   isEditable: false,
   placeholder: 'Read-Only Input',
   label: 'Read-Only Input',
+  disablePointerEvents: true,
 };
 
 export const Required = Template.bind({});

@@ -10,8 +10,9 @@ import {
   Checkbox,
   IconButton,
 } from '@mui/material';
-import { Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
+import { Delete as DeleteIcon, Edit as EditIcon, Visibility as VisibilityIcon } from '@mui/icons-material';
 import Todo from '@/types/todo';
+import Input from '@/components/common/Input';
 import TextField from '@/components/common/TextField';
 
 interface TodoModalProps {
@@ -22,7 +23,7 @@ interface TodoModalProps {
   onDelete?: (id: number | string) => void;
 }
 
-const TodoModal: React.FC<TodoModalProps> = ({ open, todo, onClose, onSave, onDelete }) => {
+const TodoModal = ({ open, todo, onClose, onSave, onDelete }: TodoModalProps) => {
   const [isEditable, setIsEditable] = useState(false);
   const [title, setTitle] = useState('');
   const [dueDate, setDueDate] = useState('');
@@ -79,22 +80,15 @@ const TodoModal: React.FC<TodoModalProps> = ({ open, todo, onClose, onSave, onDe
           {isEditable ? (todo && todo.id ? '編集' : '新規タスク') : 'タスクの詳細'}
           <Box>
             {todo && todo.id && (
-              <>
-                <IconButton onClick={toggleEditMode} color="primary">
-                  <EditIcon />
-                </IconButton>
-                {onDelete && (
-                  <IconButton onClick={handleDelete} color="error">
-                    <DeleteIcon />
-                  </IconButton>
-                )}
-              </>
+              <Button onClick={toggleEditMode} color="primary" variant="contained" startIcon={isEditable ? <VisibilityIcon /> : <EditIcon />}>
+                {isEditable ? '閲覧モード' : '編集モード'}
+              </Button>
             )}
           </Box>
         </Box>
       </DialogTitle>
       <DialogContent>
-        <TextField
+        <Input
           autoFocus
           margin="dense"
           label="タイトル"
@@ -106,8 +100,9 @@ const TodoModal: React.FC<TodoModalProps> = ({ open, todo, onClose, onSave, onDe
           error={!title.trim()}
           helperText={!title.trim() ? "タイトルは必須です" : ""}
           isEditable={isEditable}
+          disablePointerEvents={!isEditable}
         />
-        <TextField
+        <Input
           margin="dense"
           label="期限"
           type="date"
@@ -116,16 +111,16 @@ const TodoModal: React.FC<TodoModalProps> = ({ open, todo, onClose, onSave, onDe
           onChange={(e) => setDueDate(e.target.value)}
           sx={{ '& .MuiInputLabel-root': { transform: 'translate(14px, -9px) scale(0.75)' } }}
           isEditable={isEditable}
+          disablePointerEvents={!isEditable}
         />
         <TextField
           margin="dense"
           label="詳細"
-          multiline
-          rows={4}
           fullWidth
           value={details}
           onChange={(e) => setDetails(e.target.value)}
           isEditable={isEditable}
+          disablePointerEvents={!isEditable}
         />
         <FormControlLabel
           control={
@@ -139,6 +134,12 @@ const TodoModal: React.FC<TodoModalProps> = ({ open, todo, onClose, onSave, onDe
         />
       </DialogContent>
       <DialogActions>
+        {onDelete && (
+          <Button onClick={handleDelete} color="error" startIcon={<DeleteIcon />}>
+            削除
+          </Button>
+        )}
+        <Box flexGrow={1} />
         <Button onClick={handleClose}>キャンセル</Button>
         {isEditable && (
           <Button
