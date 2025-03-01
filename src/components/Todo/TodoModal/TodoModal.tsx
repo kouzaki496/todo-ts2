@@ -90,7 +90,7 @@ const TodoModal = ({ open, todo, onClose, onSave, onDelete }: TodoModalProps) =>
       </DialogTitle>
       <DialogContent>
         <Input
-          autoFocus
+          autoFocus={isEditable}
           margin="dense"
           label="タイトル"
           type="text"
