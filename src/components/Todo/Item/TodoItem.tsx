@@ -29,8 +29,6 @@ export const TodoItem = ({
   const handleCardClick = () => {
     if (isBulkDeleteMode) {
       onSelect?.();
-    } else {
-      onComplete?.(!completed);
     }
   };
 
@@ -60,7 +58,15 @@ export const TodoItem = ({
       <Card
         selected={selected}
         disabled={isBulkDeleteMode}
-        onClick={handleCardClick}
+        onClick={(e: React.MouseEvent<HTMLDivElement>) => {
+          if (e.target instanceof HTMLElement && !e.target.closest('.status-checkbox')) {
+            if (isBulkDeleteMode) {
+              onSelect?.();
+            } else if (onEdit) {
+              onEdit();
+            }
+          }
+        }}
         sx={{
           flex: 1,
           mb: 2,
@@ -88,6 +94,7 @@ export const TodoItem = ({
       >
         <CardContent sx={{ flex: 1, display: 'flex', alignItems: 'center', gap: 2 }}>
           <StatusCheckBox
+            className="status-checkbox"
             checked={completed}
             onChange={(e) => {
               e.stopPropagation();

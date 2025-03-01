@@ -6,7 +6,7 @@ import { Card as MuiCard } from "@mui/material";
  */
 interface CardProps {
   children: React.ReactNode;
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
   selected?: boolean;
   disabled?: boolean;
   className?: string;
