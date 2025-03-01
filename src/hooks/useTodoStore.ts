@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../config/firebaseConfig';
-import { TodoRepository } from '../repositories/TodoRepository';
+import { TodoRepository } from '../service/TodoFirebaseService';
 import Todo from '../types/todo';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
