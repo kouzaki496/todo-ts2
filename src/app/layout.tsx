@@ -7,7 +7,7 @@ import './globals.css';
 import { Inter } from 'next/font/google';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { MainLayout } from '../components/Layout/MainLayout';
-import { AuthProvider } from '../hooks/useAuth';
+import { AuthProvider } from '@/hooks/useAuth';
 
 const inter = Inter({ subsets: ['latin'] });
 

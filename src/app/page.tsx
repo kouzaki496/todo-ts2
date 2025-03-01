@@ -12,6 +12,7 @@ import { useTodoRepository } from '@/hooks/useTodoStore';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';
 import { Sidebar } from '@/components/Navigation/Sidebar';
+import { AuthProvider } from '@/hooks/useAuth';
 
 const initialTodos: Todo[] = [
   {
@@ -127,7 +128,6 @@ const Page: React.FC = () => {
 
   return (
     <Container maxWidth="lg">
-      <Header title="My Todo App" />
       {loading ? (
         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
           <CircularProgress />

@@ -18,17 +18,16 @@ interface FloatingActionsProps {
   selectedCount?: number;
 }
 
-export const FloatingActions: React.FC<FloatingActionsProps> = ({
+export const FloatingActions = ({
   onAddClick,
   onBulkDeleteClick,
   onSelectAll,
   onSelectCompleted,
   onClearSelection,
   onBulkDelete,
-  disabled,
   isBulkDeleteMode,
   selectedCount = 0,
-}) => {
+}: FloatingActionsProps) => {
   return (
     <Box
       onClick={(e) => e.stopPropagation()}

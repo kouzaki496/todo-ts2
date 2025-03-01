@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Box, useTheme, useMediaQuery } from '@mui/material';
 import { Sidebar } from '../Navigation/Sidebar';
 import { LAYOUT } from '../../constants/layout';
+import { Header } from '@/components';
 
 interface MainLayoutProps {
   children: React.ReactNode;
@@ -12,17 +13,8 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
-    <Box sx={{
-      display: 'flex',
-      minHeight: '100vh',
-      pt: `${LAYOUT.HEADER_HEIGHT}px`,
-      '& .MuiToolbar-root': {
-        display: 'none',
-        '&.MuiToolbar-header': {
-          display: 'flex',
-        },
-      },
-    }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+      <Header title="My Todo App" />
       <Box
         component="main"
         sx={{
