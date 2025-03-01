@@ -14,6 +14,7 @@ import { Delete as DeleteIcon, Edit as EditIcon, Visibility as VisibilityIcon } 
 import Todo from '@/types/todo';
 import Input from '@/components/common/Input';
 import TextField from '@/components/common/TextField';
+import { isRequired } from '@/utils/validation';
 
 interface TodoModalProps {
   open: boolean;
@@ -53,7 +54,7 @@ const TodoModal = ({ open, todo, onClose, onSave, onDelete }: TodoModalProps) =>
   };
 
   const handleSave = () => {
-    if (!title.trim()) {
+    if (!isRequired(title)) {
       alert('タイトルは必須です');
       return;
     }
@@ -97,8 +98,8 @@ const TodoModal = ({ open, todo, onClose, onSave, onDelete }: TodoModalProps) =>
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           required
-          error={!title.trim()}
-          helperText={!title.trim() ? "タイトルは必須です" : ""}
+          error={!isRequired(title)}
+          helperText={!isRequired(title) ? "タイトルは必須です" : ""}
           isEditable={isEditable}
           disablePointerEvents={!isEditable}
         />
@@ -146,7 +147,7 @@ const TodoModal = ({ open, todo, onClose, onSave, onDelete }: TodoModalProps) =>
             onClick={handleSave}
             color="primary"
             variant="contained"
-            disabled={!title.trim()}
+            disabled={!isRequired(title)}
           >
             保存
           </Button>
