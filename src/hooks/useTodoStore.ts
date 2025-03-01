@@ -2,7 +2,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth, db } from '../config/firebaseConfig';
-import { TodoRepository } from '../service/TodoFirebaseService';
+import { TodoFirebaseService } from '../service/TodoFirebaseService';
 import Todo from '../types/todo';
 import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
@@ -93,7 +93,7 @@ export const useTodoRepository = () => {
 
     setLoading(true);
     try {
-      const loadedTodos = await TodoRepository.getTodos(uid);
+      const loadedTodos = await TodoFirebaseService.getTodos(uid);
       setTodos(loadedTodos);
     } catch (error) {
       console.error('Error loading todos:', error);
@@ -117,7 +117,7 @@ export const useTodoRepository = () => {
       if (!userId) {
         return localStorage.addTodo(todo);
       }
-      const newTodo = await TodoRepository.addTodo(todo, userId);
+      const newTodo = await TodoFirebaseService.addTodo(todo, userId);
       setTodos(prev => [...prev, newTodo]);
       return newTodo;
     } finally {
@@ -178,7 +178,7 @@ export const useTodoRepository = () => {
         localStorage.deleteTodo(todoId);
         return;
       }
-      await TodoRepository.deleteTodo(todoId, userId);
+      await TodoFirebaseService.deleteTodo(todoId, userId);
       setTodos(prev => prev.filter(t => t.id !== todoId));
     } catch (error) {
       console.error('Error deleting todo:', error);

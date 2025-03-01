@@ -3,7 +3,15 @@ import { Box, useTheme, useMediaQuery } from '@mui/material';
 import { Sidebar } from '../Navigation/Sidebar';
 import { LAYOUT } from '../../constants/layout';
 import { Header } from '@/components';
-
+/**
+ * アプリケーションのメインレイアウトコンポーネント
+ *
+ * 役割:
+ * - アプリケーションのメインUI構造を定義
+ * - ヘッダー、サイドバーなどの配置
+ * - コンテンツ領域のレイアウト
+ * - アプリケーションの「内枠」を形成
+ */
 interface MainLayoutProps {
   children: React.ReactNode;
 }

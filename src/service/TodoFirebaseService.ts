@@ -2,7 +2,16 @@ import { collection, addDoc, updateDoc, deleteDoc, doc, getDocs, query, where } 
 import { db } from '../config/firebaseConfig';
 import Todo from '../types/todo';
 
-export class TodoRepository {
+/**
+ * Firebaseとの通信を担当するサービス
+ *
+ * 役割:
+ * - Firestoreデータベースとの通信処理
+ * - CRUDオペレーションの実装
+ * - データの永続化
+ * - 認証状態に応じたデータアクセス制御
+ */
+export class TodoFirebaseService {
   private static STORAGE_KEY = 'todos';
 
   // ローカルストレージからデータを取得

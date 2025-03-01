@@ -48,7 +48,15 @@ const Page: React.FC = () => {
   const [isBulkDeleteMode, setIsBulkDeleteMode] = useState(false);
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
-
+/**
+ * メインページコンポーネント
+ *
+ * 役割:
+ * - ルート（/）URLに対応するページコンテンツ
+ * - Todoリストの表示と操作機能の提供
+ * - ユーザーとの対話処理
+ * - ページ固有のロジックとステート管理
+ */
   const handleSaveTodo = async (title: string, dueDate: string, details: string, completed: boolean) => {
     try {
       if (selectedTodo) {

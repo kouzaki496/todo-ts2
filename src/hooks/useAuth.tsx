@@ -2,6 +2,15 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 import { User, onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../config/firebaseConfig';
 import { signInWithGoogle } from '@/service/authService';
+/**
+ * 認証関連のカスタムフック
+ *
+ * 役割:
+ * - ユーザー認証状態の管理
+ * - サインイン/サインアウト機能の提供
+ * - 認証状態の変更監視
+ * - 認証情報をアプリ全体で利用可能にする
+ */
 
 interface AuthContextType {
   user: User | null;
@@ -18,6 +27,7 @@ const AuthContext = createContext<AuthContextType>({
     await signOut(auth);
   }
 });
+
 
 export const useAuth = () => useContext(AuthContext);
 
