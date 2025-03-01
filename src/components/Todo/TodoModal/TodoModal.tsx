@@ -1,116 +1,188 @@
 import React, { useState, useEffect } from 'react';
-import { TextField, Box, FormControlLabel, Checkbox } from '@mui/material';
-import Modal from '@/components/common/Modal';
+import {
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Button,
+  Box,
+  FormControlLabel,
+  Checkbox,
+  IconButton,
+  Typography,
+} from '@mui/material';
+import { Delete as DeleteIcon, Edit as EditIcon } from '@mui/icons-material';
 import Todo from '@/types/todo';
 
 interface TodoModalProps {
   open: boolean;
   todo: Todo | null;
   onClose: () => void;
-  onSave: (updatedTitle: string, updatedDueDate: string, updatedDetails: string, updatedCompleted: boolean) => void;
-  onDelete?: (id: string | number) => void;
+  onSave: (title: string, dueDate: string, details: string, completed: boolean) => void;
+  onDelete?: (id: number | string) => void;
 }
 
 const TodoModal: React.FC<TodoModalProps> = ({ open, todo, onClose, onSave, onDelete }) => {
-  const [editedTitle, setEditedTitle] = useState('');
-  const getDefaultDate = () => new Date().toISOString().split('T')[0];
-  const [editedDueDate, setEditedDueDate] = useState(getDefaultDate());
-  const [editedDetails, setEditedDetails] = useState('');
-  const [editedCompleted, setEditedCompleted] = useState(false);
+  // 編集モードの状態
+  const [isEditMode, setIsEditMode] = useState(false);
 
+  // フォームの状態
+  const [title, setTitle] = useState('');
+  const [dueDate, setDueDate] = useState('');
+  const [details, setDetails] = useState('');
+  const [completed, setCompleted] = useState(false);
+
+  // モーダルが開かれたときに状態を初期化
   useEffect(() => {
     if (open) {
-      if (todo) {
-        setEditedTitle(todo.title);
-        setEditedDueDate(todo.dueDate);
-        setEditedDetails(todo.details || '');
-        setEditedCompleted(todo.completed);
+      if (todo && todo.id) {
+        // 既存のTodoを編集する場合
+        setTitle(todo.title || '');
+        setDueDate(todo.dueDate || '');
+        setDetails(todo.details || '');
+        setCompleted(todo.completed || false);
+        setIsEditMode(false); // 閲覧モードで開始
       } else {
-        setEditedTitle('');
-        setEditedDueDate(getDefaultDate());
-        setEditedDetails('');
-        setEditedCompleted(false);
+        // 新規作成の場合
+        setTitle('');
+        setDueDate(new Date().toISOString().split('T')[0]);
+        setDetails('');
+        setCompleted(false);
+        setIsEditMode(true); // 編集モードで開始
       }
     }
-  }, [todo, open]);
+  }, [open, todo]);
 
-  const handleSave = () => {
-    if (!editedTitle.trim()) {
-      alert('タスク名は必須です。');
-      return;
-    }
-    onSave(editedTitle, editedDueDate, editedDetails, editedCompleted);
+  // モーダルが閉じられるときに編集モードをリセット
+  const handleClose = () => {
+    onClose();
   };
 
-  const handleDelete = () => {
-    if (!todo) return;
-    if (window.confirm('このタスクを削除してもよろしいですか？')) {
-      onDelete?.(todo.id);
-      onClose();
+  // 保存処理
+  const handleSave = () => {
+    if (!title.trim()) {
+      alert('タイトルは必須です');
+      return;
     }
+    onSave(title, dueDate, details, completed);
+  };
+
+  // 削除処理
+  const handleDelete = () => {
+    if (todo && todo.id && onDelete) {
+      if (window.confirm('このタスクを削除してもよろしいですか？')) {
+        onDelete(todo.id);
+        onClose();
+      }
+    }
+  };
+
+  // 編集モードの切り替え
+  const toggleEditMode = () => {
+    setIsEditMode(!isEditMode);
   };
 
   return (
-    <Modal
-      open={open}
-      title={todo ? 'タスクを編集' : '新しいタスクを追加'}
-      onClose={onClose}
-      onConfirm={handleSave}
-      onCancel={onClose}
-      onDelete={todo && onDelete ? handleDelete : undefined}
-      deleteButton={!!todo}
-      maxWidth="md"
-      fullWidth
-    >
-      <Box component="form" sx={{ display: 'flex', flexDirection: 'column', gap: 2, pt: 1 }}>
-        <TextField
-          autoFocus
-          margin="dense"
-          label="タスク名"
-          type="text"
-          fullWidth
-          variant="outlined"
-          value={editedTitle}
-          onChange={(e) => setEditedTitle(e.target.value)}
-          required
-        />
-        <TextField
-          margin="dense"
-          label="期限"
-          type="date"
-          fullWidth
-          variant="outlined"
-          value={editedDueDate}
-          onChange={(e) => setEditedDueDate(e.target.value)}
-          inputProps={{
-            min: getDefaultDate(),
-          }}
-        />
-        <TextField
-          margin="dense"
-          label="詳細"
-          type="text"
-          fullWidth
-          variant="outlined"
-          multiline
-          rows={4}
-          value={editedDetails}
-          onChange={(e) => setEditedDetails(e.target.value)}
-        />
-        <FormControlLabel
-          control={
-            <Checkbox
-              checked={editedCompleted}
-              onChange={(e) => {
-                e.stopPropagation();
-                setEditedCompleted(e.target.checked);
-              }}
+    <Dialog open={open} onClose={handleClose} maxWidth="sm" fullWidth>
+      <DialogTitle>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          {isEditMode
+            ? (todo && todo.id ? '編集' : '新規タスク')
+            : 'タスクの詳細'}
+          <Box>
+            {todo && todo.id && (
+              <>
+                <IconButton onClick={toggleEditMode} color="primary">
+                  <EditIcon />
+                </IconButton>
+                {onDelete && (
+                  <IconButton onClick={handleDelete} color="error">
+                    <DeleteIcon />
+                  </IconButton>
+                )}
+              </>
+            )}
+          </Box>
+        </Box>
+      </DialogTitle>
+      <DialogContent>
+        {isEditMode ? (
+          // 編集モード
+          <>
+            <TextField
+              autoFocus
+              margin="dense"
+              label="タイトル"
+              type="text"
+              fullWidth
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              error={!title.trim()}
+              helperText={!title.trim() ? "タイトルは必須です" : ""}
             />
-          }
-          label="完了"
-        />
-      </Box>
-    </Modal>
+            <TextField
+              margin="dense"
+              label="期限"
+              type="date"
+              fullWidth
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+              sx={{ '& .MuiInputLabel-root': { transform: 'translate(14px, -9px) scale(0.75)' } }}
+              slotProps={{ input: { placeholder: ' ' } }}
+            />
+            <TextField
+              margin="dense"
+              label="詳細"
+              multiline
+              rows={4}
+              fullWidth
+              value={details}
+              onChange={(e) => setDetails(e.target.value)}
+            />
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={completed}
+                  onChange={(e) => setCompleted(e.target.checked)}
+                />
+              }
+              label="完了"
+            />
+          </>
+        ) : (
+          // 閲覧モード
+          <Box>
+            <Typography variant="h6" gutterBottom>
+              {title}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" gutterBottom>
+              期限: {dueDate}
+            </Typography>
+            <Typography variant="body2" color="textSecondary" gutterBottom>
+              状態: {completed ? '完了' : '未完了'}
+            </Typography>
+            <Typography variant="body1" paragraph>
+              {details || '詳細はありません'}
+            </Typography>
+          </Box>
+        )}
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleClose}>キャンセル</Button>
+        {isEditMode && (
+          <Button
+            onClick={handleSave}
+            color="primary"
+            variant="contained"
+            disabled={!title.trim()}
+          >
+            保存
+          </Button>
+        )}
+      </DialogActions>
+    </Dialog>
   );
 };
 
