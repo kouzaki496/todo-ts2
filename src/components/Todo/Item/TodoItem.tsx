@@ -42,7 +42,7 @@ export const TodoItem = ({
       {isBulkDeleteMode && (
         <DeleteCheckBox
           checked={selected}
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          onChange={(e) => {
             e.stopPropagation();
             onSelect();
           }}
@@ -95,10 +95,11 @@ export const TodoItem = ({
           <StatusCheckBox
             className="status-checkbox"
             checked={completed}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+            onChange={(e) => {
               e.stopPropagation();
               onComplete(e.target.checked);
             }}
+            disabled={isBulkDeleteMode}
           />
           <Box sx={{
             flex: 1,

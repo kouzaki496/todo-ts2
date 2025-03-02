@@ -27,7 +27,7 @@ export const DeleteCheckBox = styled(Checkbox)(({ theme }) => ({
   },
   '&:hover': {
     backgroundColor: theme.palette.error.light,
-    opacity: 0.1,
+    opacity: 0.5,
   },
 }));
 
