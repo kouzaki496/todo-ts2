@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Box, useTheme, useMediaQuery } from '@mui/material';
 import { LAYOUT } from '../../constants/layout';
 import { Header } from '@/components';
+import { Sidebar } from '@/components/Navigation/Sidebar';
 /**
  * アプリケーションのメインレイアウトコンポーネント
  *
@@ -22,17 +23,20 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <Header title="My Todo App" />
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          paddingTop: { xs: 1, sm: 2, md: 3 },
-          width: { md: `calc(100% - ${LAYOUT.DRAWER_WIDTH}px)` },
-          minHeight: '100%',
-          maxWidth: '100%',
-        }}
-      >
-        {children}
+      <Box sx={{ display: 'flex', flexDirection: 'row', minHeight: '100vh' }}>
+        {isDesktop && <Sidebar />}
+        <Box
+          component="main"
+          sx={{
+            flexGrow: 1,
+            paddingTop: { xs: 1, sm: 2, md: 3 },
+            width: { md: `calc(100% - ${LAYOUT.DRAWER_WIDTH}px)` },
+            minHeight: '100%',
+            maxWidth: '100%',
+          }}
+        >
+          {children}
+        </Box>
       </Box>
     </Box>
   );
