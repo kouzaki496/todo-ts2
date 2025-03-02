@@ -29,6 +29,7 @@ Editable.args = {
   placeholder: 'Enter text...',
   helperText: 'This field is editable',
   resize: 'both',
+  value: '編集可能なテキストフィールドです。',
 };
 
 export const ReadOnly = Template.bind({});
@@ -39,6 +40,7 @@ ReadOnly.args = {
   helperText: 'This field is read-only',
   disablePointerEvents: true,
   resize: 'none',
+  value: '編集不可なテキストフィールドです。',
 };
 
 export const Required = Template.bind({});
@@ -50,14 +52,3 @@ Required.args = {
   resize: 'both',
 };
 
-export const AutoResize = Template.bind({});
-AutoResize.args = {
-  isEditable: false,
-  label: 'Auto-Resizing TextField',
-  placeholder: 'This field resizes based on content...',
-  helperText: 'This field adjusts its height automatically based on the content.',
-  resize: 'none',
-  multiline: true,
-  value: 'このテキストフィールドは、内容に応じて高さが自動的に調整されます。複数行のテキストを入力してみてください。このテキストフィールドは、内容に応じて高さが自動的に調整されます。複数行のテキストを入力してみてください。このテキストフィールドは、内容に応じて高さが自動的に調整されます。複数行のテキストを入力してみてください。このテキストフィールドは、内容に応じて高さが自動的に調整されます。複数行のテキストを入力してみてください。このテキストフィールドは、内容に応じて高さが自動的に調整されます。複数行のテキストを入力してみてください。このテキストフィールドは、内容に応じて高さが自動的に調整されます。複数行のテキストを入力してみてください。',
-  rows: undefined, // 閲覧モードでは自動調整
-};
