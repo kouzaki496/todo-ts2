@@ -1,7 +1,7 @@
 //src/components/MenuList/MenuList.stories.tsx
 import React, { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import MenuList from './MenuList';
+import { MenuList } from '@/components/features';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { UserMenuProps } from './MenuList';

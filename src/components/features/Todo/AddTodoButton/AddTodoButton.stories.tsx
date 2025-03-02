@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
-import AddTodoButton from './AddTodoButton';
+import { AddTodoButton } from '@/components/features';
 
 export default {
   title: 'Components/AddTodoButton',

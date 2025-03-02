@@ -1,6 +1,6 @@
 import React from 'react';
 import { StoryFn, Meta } from '@storybook/react';
-import TextField from './TextField';
+import { TextField } from '@/components/index';
 
 export default {
   title: 'Common/TextField',

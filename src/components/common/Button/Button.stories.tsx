@@ -1,7 +1,7 @@
 // src/components/Button/Button.stories.tsx
 import React from 'react';
 import { Meta, StoryObj } from '@storybook/react';
-import Button from './Button';
+import { Button } from '@/components/index';
 import AddIcon from '@mui/icons-material/Add';
 
 const meta: Meta<typeof Button> = {

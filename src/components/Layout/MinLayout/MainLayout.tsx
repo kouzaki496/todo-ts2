@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, useTheme, useMediaQuery } from '@mui/material';
 import { LAYOUT } from '@/constants/layout';
-import { Header, Sidebar } from '@/components/layout';
+import { Header, Sidebar } from '@/components/index';
 /**
  * アプリケーションのメインレイアウトコンポーネント
  *
