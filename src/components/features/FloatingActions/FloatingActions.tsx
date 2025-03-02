@@ -1,12 +1,12 @@
 import React from 'react';
-import { AddTodoButton } from '@/components/Todo';
+import { AddTodoButton } from '@/components/features/Todo';
 import { Box, SpeedDial, SpeedDialAction } from '@mui/material';
 import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
 import SelectAllIcon from '@mui/icons-material/SelectAll';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ClearIcon from '@mui/icons-material/Clear';
 
-interface FloatingActionsProps {
+export interface FloatingActionsProps {
   onAddClick?: () => void;
   onBulkDeleteClick?: () => void;
   onSelectAll?: () => void;
@@ -115,3 +115,5 @@ export const FloatingActions = ({
     </Box>
   );
 };
+
+export default FloatingActions;

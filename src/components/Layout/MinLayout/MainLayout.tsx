@@ -1,8 +1,7 @@
 import React from 'react';
 import { Box, useTheme, useMediaQuery } from '@mui/material';
-import { LAYOUT } from '../../constants/layout';
-import { Header } from '@/components';
-import { Sidebar } from '@/components/Navigation/Sidebar';
+import { LAYOUT } from '@/constants/layout';
+import { Header, Sidebar } from '@/components/layout';
 /**
  * アプリケーションのメインレイアウトコンポーネント
  *
@@ -41,3 +40,5 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
     </Box>
   );
 };
+
+export default MainLayout;

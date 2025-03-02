@@ -12,12 +12,12 @@ import {
   Box,
 } from '@mui/material';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
-import { Button, MenuList } from '@/components';
+import { Button, MenuList } from '@/components/index';
 import { Settings, Logout } from '@mui/icons-material';
 import { useAuth } from '@/hooks/useAuth';
 import { useMenu } from '@/hooks/useMenu';
 
-interface HeaderProps {
+export interface HeaderProps {
   title: string;
   subtitle?: string;
 }

@@ -2,6 +2,8 @@
  * Todoコンポーネントのエントリーポイント
  * - TodoList: Todoリストを表示するコンポーネント
  * - TodoItem: 個々のTodoアイテムを表示するコンポーネント
+ * - TodoModal: Todoモーダルコンポーネント
+ * - AddTodoButton: Todoを追加するボタンコンポーネント
  * - TodoListProps: TodoListコンポーネントのプロパティ型
  * - TodoItemProps: TodoItemコンポーネントのプロパティ型
  */

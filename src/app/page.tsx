@@ -3,10 +3,8 @@
 
 import React, { useState } from 'react';
 import { Box, Container, Typography, CircularProgress } from '@mui/material';
-import { TodoList } from '@/components/Todo';
-import TodoModal from '@/components/Todo/TodoModal/TodoModal';
-import Todo from '@/types/todo';
-import { FloatingActions } from '@/components/FloatingActions/FloatingActions';
+import { TodoList, TodoModal, FloatingActions } from '@/components';
+import { Todo } from '@/types/todo';
 import { useTodoRepository } from '@/hooks/useTodoStore';
 import { useTheme } from '@mui/material/styles';
 import { useMediaQuery } from '@mui/material';

@@ -1,7 +1,6 @@
 import React from 'react';
-import { CardContent, Typography, Box, IconButton, Theme } from '@mui/material';
+import { CardContent, Typography, Box, Theme } from '@mui/material';
 import { Card, StatusCheckBox, DeleteCheckBox } from '@/components/index';
-// import { StatusCheckBox, DeleteCheckBox } from '@/components/common/CheckBox';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import { TodoItemProps } from '@/types/todo';
 /**

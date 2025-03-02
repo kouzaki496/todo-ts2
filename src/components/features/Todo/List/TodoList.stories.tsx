@@ -1,6 +1,6 @@
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
-import { TodoList} from '@/components/Todo/List/TodoList';
+import { TodoList} from '@/components/features/Todo/List/TodoList';
 import type { TodoListProps } from '@/types/todo';
 import { getTestDates } from '@/utils/date';
 import { createSampleTodo } from '@/utils/storybook';

@@ -1,7 +1,7 @@
 //src/components/Todo/Item/TodoItem.stories.tsx
 import React from 'react';
 import { Meta, StoryFn } from '@storybook/react';
-import TodoItem from '@/components/Todo/Item/TodoItem';
+import TodoItem from '@/components/features/Todo/Item/TodoItem';
 import type { TodoItemProps } from '@/types/todo';
 import { getTestDates } from '@/utils/date';
 import { compareDates } from '@/utils/date';

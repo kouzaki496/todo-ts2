@@ -6,7 +6,7 @@ import theme from '../theme';
 import './globals.css';
 import { Inter } from 'next/font/google';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
-import { MainLayout } from '../components/Layout/MainLayout';
+import { MainLayout } from '../components/layout/MinLayout/MainLayout';
 import { AuthProvider } from '@/hooks/useAuth';
 /**
  * アプリケーション全体のレイアウト

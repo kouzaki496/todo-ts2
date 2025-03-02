@@ -56,4 +56,14 @@ export interface TodoListProps {
   isBulkDeleteMode: boolean;
 }
 
+/**
+ * Todoリストアイテムのプロップス型
+ */
+export interface TodoListItemProps {
+  children: React.ReactNode;
+  isBulkDeleteMode: boolean;
+  isSelected: boolean;
+  onToggleSelect: () => void;
+}
+
 export default Todo;

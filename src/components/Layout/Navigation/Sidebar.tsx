@@ -14,7 +14,7 @@ import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import StarIcon from '@mui/icons-material/Star';
-import { LAYOUT } from '../../constants/layout';
+import { LAYOUT } from '@/constants/layout';
 
 interface SidebarProps {
   selectedCount?: number;
