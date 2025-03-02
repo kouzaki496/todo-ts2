@@ -122,6 +122,7 @@ const TodoModal = ({ open, todo, onClose, onSave, onDelete }: TodoModalProps) =>
           onChange={(e) => setDetails(e.target.value)}
           isEditable={isEditable}
           disablePointerEvents={!isEditable}
+          resize={isEditable ? 'both' : 'both'}
         />
         <FormControlLabel
           control={

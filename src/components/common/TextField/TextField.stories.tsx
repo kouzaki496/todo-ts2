@@ -5,12 +5,18 @@ import TextField from './TextField';
 export default {
   title: 'Common/TextField',
   component: TextField,
+  tags: ['autodocs'],
   argTypes: {
     isEditable: { control: 'boolean' },
     label: { control: 'text' },
     placeholder: { control: 'text' },
     helperText: { control: 'text' },
     disablePointerEvents: { control: 'boolean', defaultValue: false },
+    resize: {
+      control: 'select',
+      options: ['none', 'both', 'horizontal', 'vertical'],
+      defaultValue: 'both',
+    },
   },
 } as Meta<typeof TextField>;
 
@@ -22,6 +28,7 @@ Editable.args = {
   label: 'Editable TextField',
   placeholder: 'Enter text...',
   helperText: 'This field is editable',
+  resize: 'both',
 };
 
 export const ReadOnly = Template.bind({});
@@ -31,6 +38,7 @@ ReadOnly.args = {
   placeholder: 'Cannot edit',
   helperText: 'This field is read-only',
   disablePointerEvents: true,
+  resize: 'none',
 };
 
 export const Required = Template.bind({});
@@ -39,4 +47,5 @@ Required.args = {
   label: 'Required TextField',
   placeholder: 'Enter text...',
   required: true,
+  resize: 'both',
 };
