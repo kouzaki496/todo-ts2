@@ -131,18 +131,6 @@ export const TodoItem = ({
               </Box>
             )}
           </Box>
-          {!isBulkDeleteMode && onEdit && (
-            <IconButton
-              onClick={(e) => {
-                e.stopPropagation();
-                onEdit();
-              }}
-              size="small"
-              color="secondary"
-            >
-              <EditIcon />
-            </IconButton>
-          )}
         </CardContent>
       </Card>
     </Box>
