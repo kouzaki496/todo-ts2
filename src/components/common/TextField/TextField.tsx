@@ -18,7 +18,7 @@ const TextField = ({ isEditable, disablePointerEvents = false, resize = 'both', 
       error={props.error}
       helperText={props.helperText}
       multiline
-      rows={4}
+      rows={isEditable ? 4 : undefined}
       slotProps={{
         input: {
           readOnly: !isEditable,
@@ -41,7 +41,6 @@ const TextField = ({ isEditable, disablePointerEvents = false, resize = 'both', 
             padding: '8px 12px',
             marginBottom: 0,
             height: isEditable ? 'auto' : undefined,
-            minHeight: isEditable ? 'unset' : undefined,
             overflow: 'hidden',
           },
           '& .MuiOutlinedInput-notchedOutline': {
