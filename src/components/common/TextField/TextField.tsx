@@ -31,12 +31,16 @@ const TextField = ({ isEditable, disablePointerEvents = false, resize = 'both', 
         '& .MuiInputBase-root': {
           padding: '2px',
           marginBottom: 0,
+          height: !isEditable ? 'auto' : undefined,
+          minHeight: !isEditable ? 'unset' : undefined,
         },
         '& .MuiOutlinedInput-root': {
           '& textarea': {
             resize: isEditable ? resize : 'none',
             padding: '8px 12px',
             marginBottom: 0,
+            height: !isEditable ? 'auto !important' : undefined,
+            overflow: !isEditable ? 'hidden' : undefined,
           },
           '& .MuiOutlinedInput-notchedOutline': {
             borderRadius: '4px',
