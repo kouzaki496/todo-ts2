@@ -122,14 +122,6 @@ const TodoModal = ({ open, todo, onClose, onSave, onDelete }: TodoModalProps) =>
           onChange={(e) => setDetails(e.target.value)}
           isEditable={isEditable}
           disablePointerEvents={!isEditable}
-          resize={isEditable ? 'both' : 'none'}
-          sx={{
-            '& .MuiOutlinedInput-root': {
-              '& textarea': {
-                overflow: 'hidden', // 内容に応じて高さを調整
-              },
-            },
-          }}
         />
         <FormControlLabel
           control={
