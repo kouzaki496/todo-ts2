@@ -5,7 +5,7 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          {/* カスタムフォントをここに追加 */}
+          <link rel="icon" href="/favicon.ico" />
           <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto&display=swap" />
         </Head>
         <body>
