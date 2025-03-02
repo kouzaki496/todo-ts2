@@ -1,8 +1,7 @@
 import React from 'react';
 import { CardContent, Typography, Box, IconButton, Theme } from '@mui/material';
-import { Card } from '@/components/common/Card';
-import { StatusCheckBox, DeleteCheckBox } from '@/components/common/CheckBox';
-import EditIcon from '@mui/icons-material/Edit';
+import { Card, StatusCheckBox, DeleteCheckBox } from '@/components/index';
+// import { StatusCheckBox, DeleteCheckBox } from '@/components/common/CheckBox';
 import WhatshotIcon from '@mui/icons-material/Whatshot';
 import { TodoItemProps } from '@/types/todo';
 /**
@@ -43,7 +42,7 @@ export const TodoItem = ({
       {isBulkDeleteMode && (
         <DeleteCheckBox
           checked={selected}
-          onChange={(e) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             e.stopPropagation();
             onSelect();
           }}
@@ -96,7 +95,7 @@ export const TodoItem = ({
           <StatusCheckBox
             className="status-checkbox"
             checked={completed}
-            onChange={(e) => {
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
               e.stopPropagation();
               onComplete(e.target.checked);
             }}

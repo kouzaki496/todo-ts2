@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Box, useTheme, useMediaQuery } from '@mui/material';
-import { Sidebar } from '../Navigation/Sidebar';
 import { LAYOUT } from '../../constants/layout';
 import { Header } from '@/components';
 /**
@@ -16,7 +15,7 @@ interface MainLayoutProps {
   children: React.ReactNode;
 }
 
-export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
+export const MainLayout = ({ children }: MainLayoutProps) => {
   const theme = useTheme();
   const isDesktop = useMediaQuery(theme.breakpoints.up('md'));
 

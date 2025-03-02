@@ -30,3 +30,5 @@ export const DeleteCheckBox = styled(Checkbox)(({ theme }) => ({
     opacity: 0.1,
   },
 }));
+
+export default StatusCheckBox;
