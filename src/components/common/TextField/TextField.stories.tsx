@@ -49,3 +49,15 @@ Required.args = {
   required: true,
   resize: 'both',
 };
+
+export const AutoResize = Template.bind({});
+AutoResize.args = {
+  isEditable: false,
+  label: 'Auto-Resizing TextField',
+  placeholder: 'This field resizes based on content...',
+  helperText: 'This field adjusts its height automatically based on the content.',
+  resize: 'none',
+  multiline: true,
+  value: 'このテキストフィールドは、内容に応じて高さが自動的に調整されます。複数行のテキストを入力してみてください。このテキストフィールドは、内容に応じて高さが自動的に調整されます。複数行のテキストを入力してみてください。このテキストフィールドは、内容に応じて高さが自動的に調整されます。複数行のテキストを入力してみてください。このテキストフィールドは、内容に応じて高さが自動的に調整されます。複数行のテキストを入力してみてください。このテキストフィールドは、内容に応じて高さが自動的に調整されます。複数行のテキストを入力してみてください。このテキストフィールドは、内容に応じて高さが自動的に調整されます。複数行のテキストを入力してみてください。',
+  rows: undefined, // 閲覧モードでは自動調整
+};

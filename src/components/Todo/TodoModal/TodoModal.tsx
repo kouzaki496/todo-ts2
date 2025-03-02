@@ -121,18 +121,12 @@ const TodoModal = ({ open, todo, onClose, onSave, onDelete }: TodoModalProps) =>
           value={details}
           onChange={(e) => setDetails(e.target.value)}
           isEditable={isEditable}
-          resize={'both'}
+          disablePointerEvents={!isEditable}
+          resize={isEditable ? 'both' : 'none'}
           sx={{
             '& .MuiOutlinedInput-root': {
               '& textarea': {
-                pointerEvents: 'auto', // ポインターイベントを有効にする
-                resize: 'both', // リサイズは常に有効
-                userSelect: isEditable ? 'text' : 'none', // テキスト選択を無効化
-                // リサイズハンドルを有効にするためのスタイル
-                '&::-webkit-resizer': {
-                  pointerEvents: 'auto',
-                  cursor: 'nwse-resize',
-                },
+                overflow: 'hidden', // 内容に応じて高さを調整
               },
             },
           }}
